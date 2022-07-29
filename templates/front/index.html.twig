@@ -1,0 +1,186 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/slider.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+        <div class="app">
+
+            <div class="cardList">
+                <button class="cardList__btn btn btn--left">
+                    <div class="icon">
+                        <i class="icon-arrow-left"></i>
+                    </div>
+                </button>
+
+                <div class="cards__wrapper">
+                    <div class="card current--card">
+                        <div class="card__image">
+                            <img src="{{ asset('img/photo2.jpg') }}" alt="" />
+                        </div>
+                    </div>
+
+                    <div class="card next--card">
+                        <div class="card__image">
+                            <img src="{{ asset('img/cryomedica-bien-etre.jpg') }}" alt="" />
+                        </div>
+                    </div>
+
+                    <div class="card previous--card">
+                        <div class="card__image">
+                            <img src="{{ asset('img/cryomedica-sport.jpg') }}" alt="" />
+                        </div>
+                    </div>
+                </div>
+
+                <button class="cardList__btn btn btn--right">
+                    <div class="icon">
+                        <i class="icon-arrow-right"></i>
+                    </div>
+                </button>
+            </div>
+
+            <div class="infoList">
+                <div class="info__wrapper">
+                    <div class="info current--info">
+                        <h1 class="text name">Santé</h1>
+                        <p class="text description">Quand le froid soulage la douleur</p>
+                    </div>
+
+                    <div class="info next--info">
+                        <h1 class="text name">Bien être</h1>
+                        <p class="text description">Des effets anti-inflammatoires, <br>antidouleurs, myorelaxants</p>
+                    </div>
+
+                    <div class="info previous--info">
+                        <h1 class="text name">Sport</h1>
+                        <p class="text description">Réduit les douleurs musculaires</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app__bg">
+                <div class="app__bg__image current--image">
+                    <img src="{{ asset('img/photo2.jpg') }}" alt="" />
+                </div>
+                <div class="app__bg__image next--image">
+                    <img src="{{ asset('img/cryomedica-bien-etre.jpg') }}" alt="" />
+                </div>
+                <div class="app__bg__image previous--image">
+                    <img src="{{ asset('img/cryomedica-sport.jpg') }}" alt="" />
+                </div>
+            </div>
+
+            <div class="banner-text">
+                <h2 class="pink">La Cryothérapie Corps entier (CCE)</h2>
+                <p>La CCE est utilisée dans 3 domaines principaux : la santé, le sport et le bien-être</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="loading__wrapper">
+        <div class="loader--text">Loading...</div>
+        <div class="loader">
+            <span></span>
+        </div>
+    </div>
+
+    <svg class="icons" style="display: none;">
+        <symbol id="arrow-left" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+            <polyline points='328 112 184 256 328 400'
+                      style='fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px' />
+        </symbol>
+        <symbol id="arrow-right" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+            <polyline points='184 112 328 256 184 400'
+                      style='fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px' />
+        </symbol>
+    </svg>
+
+    <section id="cryomedica">
+            <div class="pictos">
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-cabine-cryo"></i>
+                        <p>100 cabines installées depuis 2009</p>
+                    </div>
+                </div>
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-azote"></i>
+                        <p>Cabines à l’azote</p>
+                    </div>
+                </div>
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-europe"></i>
+                        <p>Implanté en France, Belgique, Suisse</p>
+                    </div>
+                </div>
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-france"></i>
+                        <p>Cabines électriques, technologie française</p>
+                    </div>
+                </div>
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-cold"></i>
+                        <p>Une température jamais atteinte</p>
+                    </div>
+                </div>
+                <div class="cryo-card">
+                    <div class="inner-card">
+                        <i class="icon-small"></i>
+                        <p>Un emplacement très réduit</p>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section id="centers">
+        <div class="container">
+            <section>
+                <h1 class="text-center bodoni text-uppercase">Cryomedica</h1>
+
+                <p class="incoming"><span class="badge">A venir</span> Ouverture de <strong>18 centres</strong> en France</p>
+
+                <article>
+                    <div class="img-part-article">
+                        <img src="{{ asset("img/cabine-cryo-landscape.jpg") }}" alt="Image d'une cabine cryo">
+                    </div>
+                    <div class="text-part-article">
+                        <p>Les centres participant à cette opération seront constitués d’une cabine électrique, d’une cabine à l’azote et d’appareils supplémentaires de récupération.</p>
+                        <p>Les séances pratiquées seront accessibles financièrement grâce à une technologie plus économique.</p>
+                        <p>Les séances seront effectuées sous la responsabilité d’un professionnel de santé.</p>
+                        <p>Le savoir-faire est basé sur l’expérience de plus de 12 ans de la pratique de la CCE.</p>
+                        <p>Les acteurs principaux de ces centres sont des acteurs connus de la CCE.</p>
+                    </div>
+                </article>
+
+                <article>
+                    <p>La commercialisation et l’installation technique des centres. CRYOMEDICA achète sa première cabine à l’azote en 2009.</p>
+                    <p>Le Consultant thérapeutique est le 1er kinésithérapeute avec une cabine à l’azote en France, spécialiste de la récupération sportive et médicale, qui utilise lui-même plusieurs cabines de cryothérapie. CRYOMEDICA a choisi de travailler avec un consultant indépendant pour la partie thérapeutique de cette activité.</p>
+                    <p>La Fabrication avec un bureau d’études, une technologie nouvelle et française, un brevet déposé pour des températures jamais atteintes dans une cabine de cryothérapie. CRYOMEDICA a longtemps travaillé pour le développement de cette nouvelle cabine et va maintenant la développer.</p>
+                </article>
+
+                <a class="btn btn-outline-pink" href="/centres">Découvrir les centres</a>
+
+            </section>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
+    <script src="{{ asset('js/slider.js') }}"></script>
+{% endblock %}

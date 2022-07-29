@@ -1,0 +1,39 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cabins.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-uppercase">À propos</h1>
+
+    <h2>Retrouvez CRYOMEDICA sur les océans</h2>
+    <div class="cabin-banner" style="background-image: url('{{ asset('img/bateau-cryomedica.jpg') }}')"></div>
+
+    <div class="container">
+        <div class="event">
+            <span class="badge">Prochain évènement</span>
+            <p>la ROUTE du RHUM à la voile et une traversée de l’Atlantique à la voile avec le bateau <span class="pink">CRYOMEDICA</span></p>
+        </div>
+
+        <h3><em>«Pour une faire une bonne séance de cryothérapie Corps entier, choisissez un bon skipper»</em></h3>
+
+        <p><span class="pink">CRYOMEDICA</span> est partenaire de différentes associations qui vous seront bientôt présentées ici.</p>
+
+        <br><br>
+
+        <p>Pour en savoir plus visitez le site <a class="rame" href="https://www.rameocean.fr" target="_blank">Rame Océan</a></p>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("js/cabins.js") }}"></script>
+{% endblock %}

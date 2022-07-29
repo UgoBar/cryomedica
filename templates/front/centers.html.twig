@@ -1,0 +1,99 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <link rel="stylesheet" href="{{ asset('css/multi-form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/centers.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <!-- Multi step form -->
+    <section class="multi_step_form">
+        <form id="msform" method="post">
+            <!-- Tittle -->
+            <div class="tittle">
+                <h1 class="text-center text-uppercase">Comment participer ?</h1>
+                <p>Veuillez suivre les étapes ci dessous.</p>
+            </div>
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Choix du centre</li>
+                <li>Engagement</li>
+                <li>Formulaire</li>
+            </ul>
+
+            <!-- fieldsets -->
+            {# PREMIERE PARTIE / CHOIX DU CENTRE #}
+            <fieldset>
+                <h3>Choix de la carte</h3>
+                <p>Commencez par choisir un centre sur la carte</p>
+                <div id="map"></div>
+                <div class="legend">
+                    <div class="legend-pin">
+                        <img src="{{ asset('img/pin-valid.png') }}" alt="Marqueur vert"> <span>Centre ouvert</span>
+                    </div>
+                    <div class="legend-pin">
+                        <img src="{{ asset('img/pin-invalid.png') }}" alt="Marqueur rouge"> <span>Centre bientôt ouvert</span>
+                    </div>
+                </div>
+                <input type="hidden" name="center" value="">
+                <button type="button" class="action-button previous_button">Retour</button>
+                <button type="button" class="next action-button" id="step1NextButton" disabled>Suite</button>
+            </fieldset>
+
+            {# DEUXIEME PARTIE / ENGAGEMENT #}
+            <fieldset>
+                <h3>Choix du type d'engagement</h3>
+                <p>Choisissez entre devenir partenaire ou s'informer sur les réservations</p>
+                <div class="second-choice">
+                    <div class="choice-card">
+                        <p>Voulez-vous devenir partenaire ou pré-réserver des séances ?</p>
+                        <label>
+                            <input type="radio" name="commitment" id="commitment" value="pre-order">
+                            <span>Pré-réserver</span>
+                        </label>
+                    </div>
+                    <div class="choice-card">
+                        <p>Choisissez cette option pour devenir partenaire et avoir des tarifs préférentiels</p>
+                        <label>
+                            <input type="radio" name="commitment" id="commitment" value="become-partner">
+                            <span>Devenir partnaire</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="action-button previous previous_button">Retour</button>
+                <button type="button" class="next action-button" id="step2NextButton" disabled>Suite</button>
+            </fieldset>
+
+            {# TROISIEME PARTIE / DYNAMIC HTML #}
+            <fieldset>
+                <div id="step3"></div>
+                <button type="button" class="action-button previous previous_button">Retour</button>
+                <button type="submit" class="action-button">Envoyer</button>
+            </fieldset>
+        </form>
+    </section>
+    <!-- End Multi step form -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const centers = {{ centers_array | json_encode | raw }};
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+    <script src="{{ asset("js/form-step-3-html.js") }}"></script>
+    <script src="{{ asset("js/multi-step-form.js") }}"></script>
+{% endblock %}

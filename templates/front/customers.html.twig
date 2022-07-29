@@ -1,0 +1,175 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/customers.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.css">
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center text-uppercase">Les clients qui nous font confiance</h1>
+
+    <div class="container">
+
+        <section class="customers-logo">
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/psg.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>FC PSG</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/psg_handball.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>PSG Handball</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/fff-masculine.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>FFF Masculine</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/fff-feminine.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>FFF Masculine</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/clinique-jules-verne.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Clinique Jules Vernes</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/douarnenez.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Douarnenez</h5>
+               </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/mouratoglou.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Mouratoglou</h5>
+               </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/pornichet.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Pornichet</h5>
+               </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/fontromeuo.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Fontromeuo</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/maa.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>MAA</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/roscoff.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Roscoff</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/rugby-oyonnax.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Oyonnax Rugby</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/thalasso-dinard.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Thalasso Dinard</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/saint-jean-de-monts.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>Saint Jean De Monts</h5>
+                </figcaption>
+            </figure>
+            <figure class="property-card">
+                <div class="property-image" style="background-image: url('{{ asset('img/clients/logo-chp.png') }}')"></div>
+                <figcaption class="property-description">
+                    <h5>CHP St Grégoire</h5>
+                </figcaption>
+            </figure>
+        </section>
+    </div>
+
+    <section class="testimonials">
+        <div class="container">
+            <h1 class="text-center text-uppercase pink">Témoignages</h1>
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div class="content-wrapper">
+                            <div class="content">
+                                <div class="swiper-avatar"><img src="https://bikes-n-stuff.com/wp-content/uploads/sb-instagram-feed-images/julietelliott.jpg"></div>
+                                <blockquote>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</blockquote>
+                                <p class="cite pink">- Juliet Elliott, Cyclist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="content-wrapper">
+                            <div class="content">
+                                <div class="swiper-avatar"><img src="https://dgtzuqphqg23d.cloudfront.net/aqUDdv8fco91cPIeBAetAcpDfUEOIuaIrivU11PMnBs-2048x1942.jpg"></div>
+                                <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</blockquote>
+                                <p class="cite pink">- Katie Kookaburra, Cyclist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="content-wrapper">
+                            <div class="content">
+                                <div class="swiper-avatar"><img src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/188112/45714/8/full.jpg"></div>
+                                <blockquote>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</blockquote>
+                                <p class="cite pink">- Alison Tetrick, Cyclist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="content-wrapper">
+                            <div class="content">
+                                <div class="swiper-avatar"><img src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/188112/45714/8/full.jpg"></div>
+                                <blockquote>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</blockquote>
+                                <p class="cite pink">- Alison Tetrick, Cyclist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- If we need pagination -->
+                <!-- If we need navigation buttons -->
+                <div class="swiper-nav-wrapper">
+                    <div class="testimonial-arrows swiper-button-prev"><i class="icon-arrow-left"></i></div>
+                    <div class="swiper-pagination"></div>
+                    <div class="testimonial-arrows swiper-button-next"><i class="icon-arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ asset("js/customers.js") }}"></script>
+{% endblock %}

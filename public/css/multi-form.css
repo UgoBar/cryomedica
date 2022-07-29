@@ -1,0 +1,389 @@
+body {
+    padding-top: unset;
+}
+main {
+    height: 100vh;
+}
+.multi_step_form {
+    background: #545454;
+    display: block;
+    overflow: hidden;
+    height: 100%;
+}
+.multi_step_form #msform {
+    text-align: center;
+    position: relative;
+    padding-top: 5em;
+    padding-bottom: 30px;
+    min-height: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    background: #ffffff;
+    z-index: 1;
+}
+.multi_step_form #msform .tittle {
+    text-align: center;
+    padding-bottom: 40px;
+}
+.multi_step_form #msform .tittle h2 {
+    font: 500 24px/35px "Montserrat", sans-serif;
+    color: #3f4553;
+    padding-bottom: 5px;
+}
+.multi_step_form #msform .tittle p {
+    font: 400 16px/28px "Lexend Deca", sans-serif;
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset {
+    border: 0;
+    padding: 20px 105px 0;
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+.multi_step_form #msform fieldset:not(:first-of-type) {
+    display: none;
+}
+.multi_step_form #msform fieldset:nth-of-type(2) {
+    padding: 20px 46px 0;
+}
+.multi_step_form #msform fieldset h3 {
+    font: 500 18px/35px "Lexend Deca", sans-serif;
+    color: #3f4553;
+}
+.multi_step_form #msform fieldset h6 {
+    font: 400 15px/28px "Lexend Deca", sans-serif;
+    color: #5f6771;
+    padding-bottom: 30px;
+}
+.multi_step_form #msform fieldset .intl-tel-input {
+    display: block;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+}
+.multi_step_form #msform fieldset .intl-tel-input .flag-container .selected-flag {
+    padding: 0 20px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+    width: 65px;
+}
+.multi_step_form #msform fieldset .intl-tel-input .flag-container .selected-flag .iti-arrow {
+    border: 0;
+}
+.multi_step_form #msform fieldset .intl-tel-input .flag-container .selected-flag .iti-arrow:after {
+    content: "\e906";
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: rotate(180deg);
+    font: normal normal normal 24px/7px 'icomoon';
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .form-group {
+    padding: 0 10px;
+}
+.multi_step_form #msform fieldset .fg_2, .multi_step_form #msform fieldset .fg_3 {
+    padding-top: 10px;
+    display: block;
+    overflow: hidden;
+}
+.multi_step_form #msform fieldset .fg_3 {
+    padding-bottom: 70px;
+}
+.multi_step_form #msform fieldset .form-control, .multi_step_form #msform fieldset .product_select {
+    border-radius: 3px;
+    border: 1px solid #d8e1e7;
+    padding: 0 20px;
+    height: auto;
+    font: 400 15px/48px "Lexend Deca", sans-serif;
+    color: #5f6771;
+    box-shadow: none;
+    outline: none;
+    width: 100%;
+}
+.multi_step_form #msform fieldset .form-control.placeholder, .multi_step_form #msform fieldset .product_select.placeholder {
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .form-control:-moz-placeholder, .multi_step_form #msform fieldset .product_select:-moz-placeholder {
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .form-control::-moz-placeholder, .multi_step_form #msform fieldset .product_select::-moz-placeholder {
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .form-control::-webkit-input-placeholder, .multi_step_form #msform fieldset .product_select::-webkit-input-placeholder {
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .form-control:hover, .multi_step_form #msform fieldset .form-control:focus, .multi_step_form #msform fieldset .product_select:hover, .multi_step_form #msform fieldset .product_select:focus {
+    border-color: var(--pink);
+}
+.multi_step_form #msform fieldset .form-control:focus.placeholder, .multi_step_form #msform fieldset .product_select:focus.placeholder {
+    color: transparent;
+}
+.multi_step_form #msform fieldset .form-control:focus:-moz-placeholder, .multi_step_form #msform fieldset .product_select:focus:-moz-placeholder {
+    color: transparent;
+}
+.multi_step_form #msform fieldset .form-control:focus::-moz-placeholder, .multi_step_form #msform fieldset .product_select:focus::-moz-placeholder {
+    color: transparent;
+}
+.multi_step_form #msform fieldset .form-control:focus::-webkit-input-placeholder, .multi_step_form #msform fieldset .product_select:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+.multi_step_form #msform fieldset .product_select:after {
+    display: none;
+}
+.multi_step_form #msform fieldset .product_select:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font: normal normal normal 24px/48px Ionicons;
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .product_select .list {
+    width: 100%;
+}
+.multi_step_form #msform fieldset .done_text {
+    padding-top: 40px;
+}
+.multi_step_form #msform fieldset .done_text .don_icon {
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    background: var(--pink);
+    display: inline-block;
+    border-radius: 50%;
+    color: #ffffff;
+    text-align: center;
+}
+.multi_step_form #msform fieldset .done_text h6 {
+    line-height: 23px;
+}
+.multi_step_form #msform fieldset .code_group {
+    margin-bottom: 60px;
+}
+.multi_step_form #msform fieldset .code_group .form-control {
+    border: 0;
+    border-bottom: 1px solid #a1a7ac;
+    border-radius: 0;
+    display: inline-block;
+    width: 30px;
+    font-size: 30px;
+    color: #5f6771;
+    padding: 0;
+    margin-right: 7px;
+    text-align: center;
+    line-height: 1;
+}
+.multi_step_form #msform fieldset .passport {
+    margin-top: -10px;
+    padding-bottom: 30px;
+    position: relative;
+}
+.multi_step_form #msform fieldset .passport .don_icon {
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    font-size: 22px;
+    position: absolute;
+    top: 4px;
+    right: 0;
+    background: var(--pink);
+    display: inline-block;
+    border-radius: 50%;
+    color: #ffffff;
+    text-align: center;
+}
+.multi_step_form #msform fieldset .passport h4 {
+    font: 500 15px/23px "Lexend Deca", sans-serif;
+    color: #5f6771;
+    padding: 0;
+}
+.multi_step_form #msform fieldset .input-group {
+    padding-bottom: 40px;
+}
+.multi_step_form #msform fieldset .input-group .custom-file {
+    width: 100%;
+    height: auto;
+}
+.multi_step_form #msform fieldset .input-group .custom-file .custom-file-label {
+    width: 168px;
+    border-radius: 5px;
+    cursor: pointer;
+    font: 700 14px/40px "Lexend Deca", sans-serif;
+    border: 1px solid #99a2a8;
+    text-align: center;
+    transition: all 300ms linear 0s;
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .input-group .custom-file .custom-file-label i {
+    font-size: 20px;
+    padding-right: 10px;
+}
+.multi_step_form #msform fieldset .input-group .custom-file .custom-file-label:hover, .multi_step_form #msform fieldset .input-group .custom-file .custom-file-label:focus {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+}
+.multi_step_form #msform fieldset .input-group .custom-file input {
+    display: none;
+}
+.multi_step_form #msform fieldset .file_added {
+    text-align: left;
+    padding-left: 190px;
+    padding-bottom: 60px;
+}
+.multi_step_form #msform fieldset .file_added li {
+    font: 400 15px/28px "Lexend Deca", sans-serif;
+    color: #5f6771;
+}
+.multi_step_form #msform fieldset .file_added li a {
+    color: var(--pink);
+    font-weight: 500;
+    display: inline-block;
+    position: relative;
+    padding-left: 15px;
+}
+.multi_step_form #msform fieldset .file_added li a i {
+    font-size: 22px;
+    padding-right: 8px;
+    position: absolute;
+    left: 0;
+    transform: rotate(20deg);
+}
+.multi_step_form #msform #progressbar {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.multi_step_form #msform #progressbar li {
+    list-style-type: none;
+    color: #99a2a8;
+    width: calc(100%/3);
+    float: left;
+    position: relative;
+    font: 500 13px/1 "Lexend Deca", sans-serif;
+}
+.multi_step_form #msform #progressbar li:nth-child(2):before {
+    content: "2";
+}
+.multi_step_form #msform #progressbar li:nth-child(3):before {
+    content: "3";
+}
+.multi_step_form #msform #progressbar li:before {
+    content: "1";
+    font: normal normal normal 30px/50px "Lexend Deca";
+    width: 50px;
+    height: 50px;
+    display: block;
+    background: #eaf0f4;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+}
+.multi_step_form #msform #progressbar li:after {
+    content: "";
+    width: 100%;
+    height: 10px;
+    background: #eaf0f4;
+    position: absolute;
+    left: -50%;
+    top: 21px;
+    z-index: -1;
+}
+.multi_step_form #msform #progressbar li:last-child:after {
+    width: 150%;
+}
+.multi_step_form #msform #progressbar li.active {
+    color: var(--pink);
+}
+.multi_step_form #msform #progressbar li.active:before, .multi_step_form #msform #progressbar li.active:after {
+    background: var(--pink);
+    color: white;
+}
+.multi_step_form #msform .action-button {
+    background: var(--pink);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 130px;
+    font: 700 14px/40px "Lexend Deca", sans-serif;
+    border: 1px solid var(--pink);
+    margin: 0 5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.multi_step_form #msform .action-button:hover, .multi_step_form #msform .action-button:focus {
+    background: #405867;
+    border-color: #405867;
+}
+.multi_step_form #msform .previous_button {
+    background: transparent;
+    color: var(--dark);
+    border-color: var(--dark);
+}
+.multi_step_form #msform .previous_button:hover, .multi_step_form #msform .previous_button:focus {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: #fff;
+}
+
+.choice-card label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.375em;
+    margin-top: 1em;
+}
+.choice-card label input {
+    position: absolute;
+    left: -9999px;
+}
+.choice-card label input:checked + span {
+    background-color: white;
+    color: var(--dark);
+}
+.choice-card label input:checked + span:before {
+    box-shadow: inset 0 0 0 0.4375em var(--pink);
+}
+.choice-card label span {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 99em;
+    transition: 0.25s ease;
+}
+.choice-card label span:hover {
+    background-color: var(--pink);
+}
+.choice-card label span:before {
+    display: flex;
+    flex-shrink: 0;
+    content: "";
+    background-color: #fff;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin-right: 0.375em;
+    transition: 0.25s ease;
+    box-shadow: inset 0 0 0 0.125em var(--pink);
+}
+
+.multi_step_form #msform .action-button:disabled {
+    opacity: .5;
+    cursor: unset;
+}
+
+.multi_step_form #msform .action-button:disabled:hover {
+    background-color: var(--pink);
+    color: white;
+    border-color: var(--pink);
+}
