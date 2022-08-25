@@ -116,7 +116,6 @@
             // On click outside of marker
             if(!popup.isOpen()) {
                 centerInput.setAttribute('value', null) // Clear input center's value
-                console.log('GOING BY HERE')
                 step1NextButton.attr("disabled", true); // Disabled "next" button
                 clickedMarker.classList.remove('marker-highlighted')// remove highlight on previous marker
             }
@@ -147,7 +146,7 @@
             step++;
 
             if(step === 3) {
-
+                console.log("3eme étape", isSelectedCenterOpen, commitment)
                 // Pré-reserver
                 if(commitment === 'pre-order') {
                     // Centre ouvert
@@ -174,8 +173,7 @@
             next_fs.show();
             //hide the current fieldset with style
             current_fs.animate({
-                opacity: 0,
-                position: 'absolute'
+                opacity: 0
             }, {
                 step: function (now, mx) {
                     //as the opacity of current_fs reduces to 0 - stored in "now"
@@ -191,7 +189,7 @@
                     });
                     next_fs.css({
                         'left': left,
-                        'opacity': opacity,
+                        'opacity': opacity
                     });
                 },
                 duration: 800,
@@ -222,7 +220,7 @@
             current_fs.animate({
                 opacity: 0
             }, {
-                step: function (now) {
+                step: function (now, mx) {
                     //as the opacity of current_fs reduces to 0 - stored in "now"
                     //1. scale previous_fs from 80% to 100%
                     scale = 0.8 + (1 - now) * 0.2;
@@ -236,13 +234,13 @@
                     previous_fs.css({
                         'transform': 'scale(' + scale + ')',
                         'opacity': opacity,
-                        'position': 'unset'
+                        'position': 'relative'
                     });
                 },
                 duration: 800,
                 complete: function () {
                     current_fs.hide();
-                    animating = true;
+                    animating = false;
                 },
                 //this comes from the custom easing plugin
                 easing: 'easeInOutBack'
