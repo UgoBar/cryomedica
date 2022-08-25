@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html class="scrollbar-hidden" lang="">
+<html class="scrollbar-hidden" lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         {% block stylesheets %}
             <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
             <style>
@@ -100,7 +101,7 @@
                 <a href="/clients" class="nav-item {{ app.request.get('_route') == 'customers' ? 'current' : '' }}">Clients</a>
                 <a href="/cabines" class="nav-item {{ app.request.get('_route') == 'cabins' ? 'current' : ''}}">Cabines</a>
                 <a href="/historique" class="nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
-                <a href="/a-propos" class="nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
+                <a href="/about" class="nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
             </nav>
 
             <div class="menu-toggle">
@@ -131,7 +132,7 @@
                     <a href="/historique" class="mobile-nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
                 </div>
                 <div class="nav-wrapper">
-                    <a href="/a-propos" class="mobile-nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
+                    <a href="/about" class="mobile-nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
                 </div>
 
             </nav>

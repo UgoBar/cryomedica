@@ -52,6 +52,10 @@ body {
     padding-bottom: unset;
 }
 
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    display: none;
+}
+
 .step {
     display: flex;
     flex-direction: column;

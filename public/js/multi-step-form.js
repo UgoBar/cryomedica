@@ -41,6 +41,7 @@
             type: 'normal',
             format: 'png',
             center: [46.11, -0.01],
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         }).addTo(map);
 
 
@@ -146,7 +147,7 @@
             step++;
 
             if(step === 3) {
-                console.log("3eme étape", isSelectedCenterOpen, commitment)
+
                 // Pré-reserver
                 if(commitment === 'pre-order') {
                     // Centre ouvert
@@ -173,7 +174,8 @@
             next_fs.show();
             //hide the current fieldset with style
             current_fs.animate({
-                opacity: 0
+                opacity: 0,
+                position: 'absolute'
             }, {
                 step: function (now, mx) {
                     //as the opacity of current_fs reduces to 0 - stored in "now"
@@ -189,7 +191,7 @@
                     });
                     next_fs.css({
                         'left': left,
-                        'opacity': opacity
+                        'opacity': opacity,
                     });
                 },
                 duration: 800,
@@ -220,7 +222,7 @@
             current_fs.animate({
                 opacity: 0
             }, {
-                step: function (now, mx) {
+                step: function (now) {
                     //as the opacity of current_fs reduces to 0 - stored in "now"
                     //1. scale previous_fs from 80% to 100%
                     scale = 0.8 + (1 - now) * 0.2;
@@ -233,13 +235,14 @@
                     });
                     previous_fs.css({
                         'transform': 'scale(' + scale + ')',
-                        'opacity': opacity
+                        'opacity': opacity,
+                        'position': 'unset'
                     });
                 },
                 duration: 800,
                 complete: function () {
                     current_fs.hide();
-                    animating = false;
+                    animating = true;
                 },
                 //this comes from the custom easing plugin
                 easing: 'easeInOutBack'

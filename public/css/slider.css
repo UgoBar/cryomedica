@@ -34,7 +34,7 @@ button:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
     opacity: 1;
     transition: .6s .2s cubic-bezier(0.35, 0, 0.07, 0.4);
 }
@@ -198,6 +198,7 @@ button:focus {
     width: calc(3 * var(--card-width));
     height: var(--card-height);
     pointer-events: none;
+    z-index: 1;
 }
 .infoList .info__wrapper {
     position: relative;
