@@ -98,7 +98,7 @@ class FrontController extends AbstractController
                         $content = "Bonjour Mr Favre, je vous contacte pour devenir partenaire du centre $centerName situé à $centerCity";
                     }
 
-                    // Case 2 - PRE-ORDER - center open
+                    // Case 2 - PRE-ORDER
                     if($commitment === 'pre-order' && $isCenterOpen) {
                         // Validation
                         $sessionNumber = (isset($_POST['number'])) ? trim($_POST['number']) : '';
@@ -148,7 +148,7 @@ class FrontController extends AbstractController
             'routeName' => 'centers'
         ]);
     }
-    
+
 
     #[Route('/mailSent', name: 'mailSent')]
     public function mailSent(): Response
