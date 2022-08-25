@@ -19,9 +19,7 @@ class FrontController extends AbstractController
         $this->em = $doctrine->getManager();
     }
 
-    /**
-     * @Route("/", name="index")
-     */
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         return $this->render('front/index.html.twig', [
@@ -29,10 +27,8 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/centres", name="centers")
-     * @throws \Exception
-     */
+
+    #[Route('/centres', name: 'centers')]
     public function participate(): Response
     {
         /** @var CryoCentersRepository $CentersRepo */
@@ -68,6 +64,9 @@ class FrontController extends AbstractController
             if($center) {
 
                 $isCenterOpen = $center->isIsOpen();
+                $centerName = $center->getName();
+                $centerCity = $center->getCity();
+                $content = '';
 
                 // Check if radio input commitment matches with 'pre-order' or 'become-partner'
                 if($commitment === 'become-partner' || $commitment === 'pre-order') {
@@ -95,19 +94,41 @@ class FrontController extends AbstractController
 
                         if(!$company)
                             $errors['company'] = true;
+
+                        $content = "Bonjour Mr Favre, je vous contacte pour devenir partenaire du centre $centerName situé à $centerCity";
                     }
 
-                    // Case 2 - PRE-ORDER
+                    // Case 2 - PRE-ORDER - center open
                     if($commitment === 'pre-order' && $isCenterOpen) {
                         // Validation
                         $sessionNumber = (isset($_POST['number'])) ? trim($_POST['number']) : '';
 
                         if(gettype($sessionNumber) !== 'integer' && $sessionNumber < 1)
                             $errors['sessionNumber'] = true;
+
+                        $content = "Bonjour Mr Favre, je vous contacte pour pré-réserver des séances au centre $centerName situé à $centerCity pour un total de $sessionNumber séance(s)";
                     }
+
+                    // Case 3 - PRE-ORDER - center close
+                    if($commitment === 'pre-order' && !$isCenterOpen) {
+                        $content = "Bonjour Mr Favre, je vous fait part de mon intérêt pour le centre $centerName situé à $centerCity";
+                    }
+
 
                     if(!$errors) {
                         // Send mail
+                        // $mailTo  = 'pfavre92@icloud.com';
+                        $mailTo  = 'ugo17190@gmail.com';
+
+                        $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
+
+                        $headers  = 'MIME-Version: 1.0' . "\r\n";
+                        $headers .= 'From: Patrick Favre <contact@rameocean.fr>'."\r\n";
+                        $headers .= 'Reply-To: '.$email."\r\n";
+                        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+                        $headers .= 'X-Mailer: PHP/' . phpversion();
+
+                        mail($mailTo, $subject, $content, $headers);
                         // Redirect
                         return $this->redirectToRoute('mailSent');
                     }
@@ -124,13 +145,12 @@ class FrontController extends AbstractController
             'page_name' => 'Les centres',
             'centers_array' => $centersArray,
             'errors' => $errors,
-            'routeName' => 'participate'
+            'routeName' => 'centers'
         ]);
     }
+    
 
-    /**
-     * @Route("/mailSent", name="mailSent")
-     */
+    #[Route('/mailSent', name: 'mailSent')]
     public function mailSent(): Response
     {
         return $this->render('front/mailSent.html.twig', [
@@ -138,9 +158,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/clients", name="customers")
-     */
+    #[Route('/clients', name: 'customers')]
     public function customers(): Response
     {
         return $this->render('front/customers.html.twig', [
@@ -148,9 +166,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/historique", name="historic")
-     */
+    #[Route('/historique', name: 'historic')]
     public function historic(): Response
     {
         return $this->render('front/historic.html.twig', [
@@ -158,9 +174,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cabines", name="cabins")
-     */
+    #[Route('/cabines', name: 'cabins')]
     public function cabins(): Response
     {
         return $this->render('front/cabins.html.twig', [
@@ -168,9 +182,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/a-propos", name="about")
-     */
+    #[Route('/about', name: 'about')]
     public function about(): Response
     {
         return $this->render('front/about.html.twig', [
