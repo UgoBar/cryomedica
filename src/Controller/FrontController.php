@@ -28,6 +28,9 @@ class FrontController extends AbstractController
     }
 
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/centres', name: 'centers')]
     public function participate(): Response
     {
@@ -134,10 +137,10 @@ class FrontController extends AbstractController
                     }
 
                 } else {
-//                    throw new \Exception('Il y a une erreur sur la partie 2 du formulaire');
+                    throw new \Exception('Il y a une erreur sur la partie 2 du formulaire');
                 }
             } else {
-//                throw new \Exception('Ce centre n\'existe pas');
+                throw new \Exception('Ce centre n\'existe pas');
             }
         }
 
