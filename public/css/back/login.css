@@ -1,22 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700;6..96,800&family=Lexend+Deca:wght@100;300;400;500;700;900&family=Montserrat:wght@100;300;400;700;900&display=swap');
+
+:root {
+    --pink: #d545af;
+    --dark: #1a1e23;
+    --shadow: 0 10px 25px rgba(0,0,0,.6);
+}
+
 * {
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
     font-weight: 300;
     margin: 0;
 }
 
 html, body {
+    font-family: 'Lexend Deca', sans-serif;
     height: 100vh;
     width: 100vw;
     margin: 0 0;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    background: #f3f2f2;
+    background: var(--dark);
 }
 
 h4 {
+    font-family: 'Bodoni Moda', serif;
+    text-transform: uppercase;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: bold;
     color: #000;
     opacity: 0.85;
 }
@@ -29,24 +39,14 @@ label {
 }
 
 form {
-    padding: 40px 30px;
+    padding: 40px 30px 20px 30px;
     background: #fefefe;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 20px;
-}
-form h4 {
-    margin-bottom: 20px;
-    color: rgba(0, 0, 0, 0.5);
-}
-form h4 span {
-    color: black;
-    font-weight: 700;
 }
 form p {
     line-height: 155%;
-    margin-bottom: 5px;
     font-size: 14px;
     color: #000;
     opacity: 0.65;
@@ -73,19 +73,20 @@ button {
     -webkit-appearance: none;
     width: auto;
     min-width: 100px;
-    border-radius: 24px;
     text-align: center;
     padding: 15px 40px;
-    margin-top: 5px;
-    background-color: #b08bf8;
-    color: #fff;
-    font-size: 14px;
+    background-color: transparent;
+    color: var(--pink);
+    font-size: 15px;
     margin-left: auto;
-    font-weight: 500;
-    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.13);
-    border: none;
+    font-weight: bold;
+    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.33);
+    border: 2px solid var(--pink);
     transition: all 0.3s ease;
     outline: 0;
+    margin-top: auto;
+    text-transform: uppercase;
+    font-family: 'Lexend Deca', sans-serif;
 }
 button:hover {
     transform: translateY(-3px);
@@ -110,7 +111,7 @@ input {
     -webkit-appearance: none;
 }
 input:focus {
-    border-bottom: solid 1px #b69de6;
+    border-bottom: solid 1px var(--pink);
     outline: 0;
     box-shadow: 0 2px 6px -8px rgba(182, 157, 230, 0.45);
 }
@@ -160,8 +161,8 @@ input:focus {
 }
 
 .left {
-    width: 220px;
-    height: auto;
+    width: 306px;
+    height: 430px;
     min-height: 100%;
     position: relative;
     background-image: url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
@@ -169,8 +170,17 @@ input:focus {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
-.left svg {
-    height: 40px;
-    width: auto;
-    margin: 20px;
+
+@media screen and (max-width: 560px) {
+    button {
+        margin-top: 20px;
+    }
+    .session {
+        display: flex;
+        flex-direction: column;
+    }
+    .left {
+        width: 100%;
+        height: 300px;
+    }
 }

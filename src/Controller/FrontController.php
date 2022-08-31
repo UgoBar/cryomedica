@@ -23,7 +23,7 @@ class FrontController extends AbstractController
     public function index(): Response
     {
         return $this->render('front/index.html.twig', [
-            'page_name' => 'Accueil',
+            'title' => 'Accueil',
         ]);
     }
 
@@ -145,7 +145,7 @@ class FrontController extends AbstractController
         }
 
         return $this->render('front/centers.html.twig', [
-            'page_name' => 'Les centres',
+            'title' => 'Les centres',
             'centers_array' => $centersArray,
             'errors' => $errors,
             'routeName' => 'centers'
@@ -157,7 +157,7 @@ class FrontController extends AbstractController
     public function mailSent(): Response
     {
         return $this->render('front/mailSent.html.twig', [
-            'page_name' => 'Demande envoyée !',
+            'title' => 'Demande envoyée !',
         ]);
     }
 
@@ -165,7 +165,7 @@ class FrontController extends AbstractController
     public function customers(): Response
     {
         return $this->render('front/customers.html.twig', [
-            'page_name' => 'Clients',
+            'title' => 'Clients',
         ]);
     }
 
@@ -173,7 +173,7 @@ class FrontController extends AbstractController
     public function historic(): Response
     {
         return $this->render('front/historic.html.twig', [
-            'page_name' => 'Historique',
+            'title' => 'Historique',
         ]);
     }
 
@@ -181,7 +181,7 @@ class FrontController extends AbstractController
     public function cabins(): Response
     {
         return $this->render('front/cabins.html.twig', [
-            'page_name' => 'Cabines',
+            'title' => 'Cabines',
         ]);
     }
 
@@ -189,7 +189,7 @@ class FrontController extends AbstractController
     public function about(): Response
     {
         return $this->render('front/about.html.twig', [
-            'page_name' => 'A propos',
+            'title' => 'A propos',
         ]);
     }
 }

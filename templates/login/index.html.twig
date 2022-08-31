@@ -6,19 +6,19 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     {% block stylesheets %}
-        <link href="{{ asset('css/login.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/back/login.css') }}" rel="stylesheet" />
     {% endblock %}
 </head>
 
 <body>
 <div class="session">
-    <div class="left"></div>
+    <div class="left" style="background-image: url('{{ asset('img/photo3.jpg') }}')"></div>
     <form action="{{ path('login') }}" method="post" class="log-in" autocomplete="off">
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <h4>We are <span>NUVA</span></h4>
-        <p>Welcome back! Log in to your account to view today's clients:</p>
+        <h4>Cryomedica</h4>
+        <p>Connexion au Back Office</p>
 
         <div class="floating-label">
             <input placeholder="Email" type="text" id="email" name="email" autocomplete="off" value="{{ email }}">
