@@ -3,22 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\CryoUser;
+use App\Helper\Helper;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController extends AbstractController
 {
 
-    private \Symfony\Component\HttpFoundation\Session\SessionInterface $session;
     private \Doctrine\Persistence\ObjectManager $em;
+    private Helper $helper;
 
-    public function __construct(ManagerRegistry $doctrine, RequestStack $requestStack)
+    public function __construct(ManagerRegistry $doctrine, Helper $helper)
     {
         $this->em = $doctrine->getManager();
-        $this->session = $requestStack->getSession();
+        $this->helper = $helper;
     }
 
     #[Route('/admin/login', name: 'login')]
@@ -53,8 +53,8 @@ class LoginController extends AbstractController
 
             if($requestedUser && password_verify($password, $hash)) {
 
-                $this->session->set('connected', true);
-                $this->session->set('user', $requestedUser);
+                $this->helper->session->set('connected', true);
+                $this->helper->session->set('user', $requestedUser);
                 return $this->redirectToRoute('dashboard');
             } else
                 $loginError = true;

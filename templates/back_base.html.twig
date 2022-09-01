@@ -92,149 +92,151 @@
     {% endblock %}
 </head>
 <body class="g-sidenav-show  bg-gray-200">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
-        <div class="sidenav-header" >
-            <i class="fas fa-times p-3 cursor-pointer text-white opacity-7 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-            <h4 class="font-weight-bold text-white text-uppercase text-center bodoni my-4">Cryomedica</h4>
-        </div>
-        <hr class="horizontal light mt-0 mb-2">
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-            <ul class="navbar-nav">
 
-                <li class="nav-item">
-                    <a class="{{ title == 'Dashboard' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="/admin/dashboard">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">dashboard</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Banner' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="/admin/banner">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">photo_library</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Bannières</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Pictos' ? 'bg-gradient-primary' : '' }} nav-link text-white">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">draw</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Pictos</span>
-                    </a>
-                </li>
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark scrollbar" id="sidenav-main">
+            <div class="sidenav-header" >
+                <i class="fas fa-times p-3 cursor-pointer text-white opacity-7 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+                <h4 class="font-weight-bold text-white text-uppercase text-center bodoni my-4">Cryomedica</h4>
+            </div>
+            <hr class="horizontal light mt-0 mb-2">
+            <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+                <ul class="navbar-nav">
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Accueil</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Présentation' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">menu_book</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Présentation</span>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'dashboard' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="{{ path('dashboard') }}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">dashboard</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'banner' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="{{ path('banners') }}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">photo_library</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Bannières</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Pictos' ? 'bg-gradient-primary' : '' }} nav-link text-white">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">draw</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Pictos</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Centres</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Centres' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">home</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Liste des centres</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Contacts' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">mail</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Contacts</span>
-                    </a>
-                </li>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Accueil</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Présentation' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">menu_book</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Présentation</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Clients</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Clients' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">list_alt</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Liste des clients</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Témoignages' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">volunteer_activism</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Témoignages</span>
-                    </a>
-                </li>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Centres</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Centres' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">home</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Liste des centres</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Contacts' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">mail</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Contacts</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Cabines</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Electriques' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">bolt</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Electriques</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Azote' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="icon-azote opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Azote</span>
-                    </a>
-                </li>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Clients</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Clients' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">list_alt</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Liste des clients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Témoignages' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">volunteer_activism</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Témoignages</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Historique</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Historique' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">history_edu</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Les dates</span>
-                    </a>
-                </li>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Cabines</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Electriques' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">bolt</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Electriques</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Azote' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon-azote opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Azote</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Communication</h6>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ title == 'Communication' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">badge</i>
-                        </div>
-                        <span class="nav-link-text ms-1">A propos</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-            <form action="{{ path('logout') }}" method="post" class="mx-3">
-                <button class="btn bg-gradient-primary mt-4 w-100 mb-1" type="submit">Déconnexion</button>
-                <p class="text-white text-center fs-14">{{ app.session.get('user').firstname }} {{ app.session.get('user').lastname }}</p>
-            </form>
-        </div>
-    </aside>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Historique</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Historique' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">history_edu</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Les dates</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Communication</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="{{ nav == 'Communication' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">badge</i>
+                            </div>
+                            <span class="nav-link-text ms-1">A propos</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+                <form action="{{ path('logout') }}" method="post" class="mx-3">
+                    <button class="btn bg-gradient-primary mt-4 w-100 mb-1" type="submit">Déconnexion</button>
+                    <p class="text-white text-center fs-14">{{ app.session.get('user').firstname }} {{ app.session.get('user').lastname }}</p>
+                </form>
+            </div>
+        </aside>
+
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
             <div class="py-3 mt-3 breadcrump-header">
-                <h6 class="font-weight-bolder mb-0 page-title">{{ title }}</h6>
+                <h1 class="font-weight-bolder mb-0 page-title">{{ title }}</h1>
                 <div class="collapse navbar-collapse mt-sm-0 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -258,8 +260,12 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/back/core/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/back/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('js/back/material-dashboard.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        window.Scrollbar.init(document.querySelector('#my-scrollbar'));
+    </script>
 {% endblock %}
 
 </body>

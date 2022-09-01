@@ -92,16 +92,16 @@
 
         <header>
             <nav class="nav-logo">
-                <a href="/" class="text-center fw-bold">
+                <a href="{{ path('index') }}" class="text-center fw-bold">
                     <img src="{{ asset("img/logo_cryomedica.png") }}" alt="Logo Cryomedica">
                 </a>
             </nav>
             <nav class="nav-items">
-                <a href="/centres" class="nav-item {{ app.request.get('_route') == 'centers' ? 'current' : '' }}">Centres</a>
-                <a href="/clients" class="nav-item {{ app.request.get('_route') == 'customers' ? 'current' : '' }}">Clients</a>
-                <a href="/cabines" class="nav-item {{ app.request.get('_route') == 'cabins' ? 'current' : ''}}">Cabines</a>
-                <a href="/historique" class="nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
-                <a href="/about" class="nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
+                <a href="{{ path('centers') }}" class="nav-item {{ app.request.get('_route') == 'centers' ? 'current' : '' }}">Centres</a>
+                <a href="{{ path('customers') }}" class="nav-item {{ app.request.get('_route') == 'customers' ? 'current' : '' }}">Clients</a>
+                <a href="{{ path('cabins') }}" class="nav-item {{ app.request.get('_route') == 'cabins' ? 'current' : ''}}">Cabines</a>
+                <a href="{{ path('historic') }}" class="nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
+                <a href="{{ path('about') }}" class="nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
             </nav>
 
             <div class="menu-toggle">
@@ -120,19 +120,19 @@
         <div class="mobile-header">
             <nav class="mobile-nav-items">
                 <div class="nav-wrapper">
-                    <a href="/centres" class="mobile-nav-item {{ app.request.get('_route') == 'centers' ? 'current' : '' }}">Centres</a>
+                    <a href="{{ path('centers') }}" class="mobile-nav-item {{ app.request.get('_route') == 'centers' ? 'current' : '' }}">Centres</a>
                 </div>
                 <div class="nav-wrapper">
-                    <a href="/clients" class="mobile-nav-item {{ app.request.get('_route') == 'customers' ? 'current' : '' }}">Clients</a>
+                    <a href="{{ path('customers') }}" class="mobile-nav-item {{ app.request.get('_route') == 'customers' ? 'current' : '' }}">Clients</a>
                 </div>
                 <div class="nav-wrapper">
-                    <a href="/cabines" class="mobile-nav-item {{ app.request.get('_route') == 'cabines' ? 'current' : ''}}">Cabines</a>
+                    <a href="{{ path('cabins') }}" class="mobile-nav-item {{ app.request.get('_route') == 'cabines' ? 'current' : ''}}">Cabines</a>
                 </div>
                 <div class="nav-wrapper">
-                    <a href="/historique" class="mobile-nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
+                    <a href="{{ path('historic') }}" class="mobile-nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
                 </div>
                 <div class="nav-wrapper">
-                    <a href="/about" class="mobile-nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
+                    <a href="{{ path('about') }}" class="mobile-nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">A propos</a>
                 </div>
 
             </nav>

@@ -1,0 +1,11 @@
+{% block form_widget_compound %}
+    {% if form.parent is empty %}
+        <div {{ block('widget_container_attributes') }}>
+        {{ form_errors(form) }}
+    {% endif %}
+    {{ block('form_rows') }}
+    {{ form_rest(form) }}
+    {% if form.parent is empty %}
+        </div>
+    {% endif %}
+{% endblock %}
