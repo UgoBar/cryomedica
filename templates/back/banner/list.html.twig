@@ -1,7 +1,146 @@
 {% extends 'back_base.html.twig' %}
 
 {% block body %}
-    <div class="row ms-0">
-        <a class="btn bg-gradient-primary mb-1" type="submit" style="width: fit-content" href="{{ path('create_banner') }}">Ajouter une bannière</a>
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" type="submit" style="width: fit-content" href="{{ path('create_banner') }}">Ajouter une bannière</a>
     </div>
+
+    {% if homeBanners %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Page d'accueil</h6>
+                {% for banner in homeBanners %}
+                    <div class="col-xs-12 col-md-6 col-xl-3 me-4 mb-4" id="banner-{{ banner.id }}">
+                        <div class="banner-card">
+                            <figure>
+                                <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
+                                <div class="card-actions">
+                                    <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                                    <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                </div>
+                            </figure>
+                            <div class="card-body">
+                                <h4 class="text-center">{{ banner.title }}</h4>
+                                <select id="banner-{{ banner.id }}" class="form-select" name="banner-{{ banner.id }}-position">
+                                    <option value="1" {{ banner.position == 1 ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ banner.position == 2 ? 'selected' : '' }}>2</option>
+                                    <option value="3" {{ banner.position == 3 ? 'selected' : '' }}>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" name="order" class="btn btn-secondary">Changer l'ordre</button>
+        </form>
+    {% endif %}
+
+    {% if homeBanners and elecBanners %}
+        <hr class="bg-pink my-4">
+    {% endif %}
+
+    {% if elecBanners %}
+        <div class="row ms-0 no-gutter w-100 banner pt-2 pb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-2">Page Cabines - électriques</h6>
+            {% for banner in elecBanners %}
+                <div class="col-12" id="banner-{{ banner.id }}">
+                    <div class="banner-card">
+                        <figure class="not-home-figure">
+                            <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
+                            <div class="card-actions">
+                                <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if elecBanners and azoteBanners %}
+        <hr class="bg-pink my-4">
+    {% endif %}
+
+    {% if azoteBanners %}
+        <div class="row ms-0 no-gutter w-100 banner pt-2 pb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-2">Page Cabines - azote</h6>
+            {% for banner in azoteBanners %}
+                <div class="col-12" id="banner-{{ banner.id }}">
+                    <div class="banner-card">
+                        <figure class="not-home-figure">
+                            <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
+                            <div class="card-actions">
+                                <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if azoteBanners and aboutBanners %}
+        <hr class="bg-pink my-4">
+    {% endif %}
+
+    {% if aboutBanners %}
+        <div class="row ms-0 no-gutter w-100 banner pt-2 pb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-2">Page Cabines - azote</h6>
+            {% for banner in aboutBanners %}
+                <div class="col-12" id="banner-{{ banner.id }}">
+                    <div class="banner-card">
+                        <figure class="not-home-figure">
+                            <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
+                            <div class="card-actions">
+                                <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id) => {
+            Swal.fire({
+                title: 'Attention',
+                text: "La suppression est irréversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_banner') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'La bannière a bien été supprimée',
+                                'success'
+                            );
+                            $('#banner-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 {% endblock %}

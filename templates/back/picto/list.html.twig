@@ -1,0 +1,108 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" type="submit" style="width: fit-content" href="{{ path('create_picto') }}">Ajouter un picto</a>
+    </div>
+
+    {% if homePictos %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100" style="margin-bottom: 5em">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Page d'accueil</h6>
+                {% for picto in homePictos %}
+
+                    <div id="picto-{{ picto.id }}" class="picto-card" style="background-color: {{ picto.bgColor }}; color: {{ picto.color }}">
+                        <div class="inner-card">
+                            <img src="{{ asset('img/' ~ picto.media.picture) }}" alt="{{ picto.media.alt }}">
+                            <p>{{ picto.title }}</p>
+                        </div>
+                        <div class="card-footer-actions">
+                            <a class="btn btn-secondary no-radius" href="{{ path('edit_picto', { 'id': picto.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                            <select name="homePicto-{{ picto.id }}-position" id="homePicto-{{ picto.id }}" class="custom-select">
+                                {% for i in 1..homePictos|length %}
+                                    <option value="{{ i }}" {{ picto.position == i ? 'selected' : '' }}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" name="home-order" class="btn btn-secondary">Changer l'ordre</button>
+        </form>
+    {% endif %}
+
+    {% if homePictos and elecPictos %}
+        <hr class="bg-pink my-4">
+    {% endif %}
+
+    {% if elecPictos %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100" style="margin-bottom: 5em">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Page cabines électriques</h6>
+                {% for picto in elecPictos %}
+
+                    <div id="picto-{{ picto.id }}" class="picto-card" style="background-color: {{ picto.bgColor }}; color: {{ picto.color }}">
+                        <div class="inner-card">
+                            <img src="{{ asset('img/' ~ picto.media.picture) }}" alt="{{ picto.media.alt }}">
+                            <p>{{ picto.title }}</p>
+                        </div>
+                        <div class="card-footer-actions">
+                            <a class="btn btn-secondary no-radius" href="{{ path('edit_picto', { 'id': picto.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                            <select name="elecPicto-{{ picto.id }}-position" id="elecPicto-{{ picto.id }}" class="custom-select">
+                                {% for i in 1..elecPictos|length %}
+                                    <option value="{{ i }}" {{ picto.position == i ? 'selected' : '' }}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" name="elec-order" class="btn btn-secondary">Changer l'ordre</button>
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id) => {
+            Swal.fire({
+                title: 'Attention',
+                text: "La suppression est irréversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_picto') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'La bannière a bien été supprimée',
+                                'success'
+                            );
+                            $('#picto-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -24,6 +24,10 @@ class CryoMedia
     private ?string $alt = null;
 
     #[Vich\UploadableField(mapping: 'uploads', fileNameProperty: 'picture')]
+//    #[Assert\File(
+//        maxSize: '2048k',
+//        mimeTypes: []
+//    )]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string')]
@@ -39,6 +43,8 @@ class CryoMedia
     {
         $this->title = new ArrayCollection();
         $this->cryoBanners = new ArrayCollection();
+        $this->cryoPictos = new ArrayCollection();
+        $this->cryoBios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,12 +52,27 @@ class CryoMedia
         return $this->id;
     }
 
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoPicto::class)]
+    private Collection $cryoPictos;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoBio::class)]
+    private Collection $cryoBios;
+
     /**
      * @param \Symfony\Component\HttpFoundation\File\File|null $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
     public function getImageFile(): ?File
@@ -64,7 +85,7 @@ class CryoMedia
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
@@ -137,6 +158,66 @@ class CryoMedia
             // set the owning side to null (unless already changed)
             if ($cryoBanner->getMedia() === $this) {
                 $cryoBanner->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoPicto>
+     */
+    public function getCryoPictos(): Collection
+    {
+        return $this->cryoPictos;
+    }
+
+    public function addCryoPicto(CryoPicto $cryoPicto): self
+    {
+        if (!$this->cryoPictos->contains($cryoPicto)) {
+            $this->cryoPictos[] = $cryoPicto;
+            $cryoPicto->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoPicto(CryoPicto $cryoPicto): self
+    {
+        if ($this->cryoPictos->removeElement($cryoPicto)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoPicto->getMedia() === $this) {
+                $cryoPicto->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoBio>
+     */
+    public function getCryoBios(): Collection
+    {
+        return $this->cryoBios;
+    }
+
+    public function addCryoBio(CryoBio $cryoBio): self
+    {
+        if (!$this->cryoBios->contains($cryoBio)) {
+            $this->cryoBios[] = $cryoBio;
+            $cryoBio->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoBio(CryoBio $cryoBio): self
+    {
+        if ($this->cryoBios->removeElement($cryoBio)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoBio->getMedia() === $this) {
+                $cryoBio->setMedia(null);
             }
         }
 

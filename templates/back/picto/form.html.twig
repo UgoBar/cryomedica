@@ -1,0 +1,113 @@
+{% extends 'back_base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/back/coloris.min.css') }}">
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('pictos') }}" class="btn btn-secondary mb-4"><i class="material-icons text-white pe-2">keyboard_backspace</i>Retour à la liste</a>
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
+    <div class="col-lg-6 col-12">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-3">Pictogramme</h6>
+            {{ form_row(form.media.alt, {
+                'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                'label_attr':{'class':'form-label'},
+                'row_attr': {'class':'input-group input-group-outline'}
+            }) }}
+            <small class="text-secondary">Le <b>alt</b> sert à l'audio-description des images pour les non-voyants.</small>
+            {{ form_row(form.media.imageFile) }}
+            <label for="cryo_picto_media_imageFile_file">
+                        <span id="file-upload-btn" class="btn btn-primary">
+                        <i class="material-icons text-white pe-2" aria-hidden="true">download_for_offline</i>Drag or clic
+                    </span>
+                <p class="text-secondary text-center">Format conseillé : <b>png</b>. Dimensions : <b>300x300 (px)</b>. Taille max : <b>2 Mo</b></p>
+                {% if vich_uploader_asset(media, 'imageFile') is null %}
+                    <img id="file-image" src="{{ asset('img/default-drop-zone.png') }}" alt="image par défaut"/>
+                {% else %}
+                    <img id="file-image" src="{{  vich_uploader_asset(media, 'imageFile') }}" style="width:75%; height:auto;">
+                {% endif %}
+                <div class="position-relative">
+                    <div id="start" style="left: 0; top: 0; opacity: 0; position: absolute;">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <div></div>
+                        <span id="file-upload-btn" class="btn btn-primary"></span>
+                        <div id="notimage" class="hidden"></div>
+                    </div>
+                    <div id="response" class="hidden">
+                        <div id="messages" class="pink"></div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-12" id="fileDrag">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Sélection de page</h6>
+            <small class="mb-3">Choix de la page d'affichage de la bannière</small>
+            {{ form_row(form.page, {
+                'attr': {'class':'form-select ps-3'},
+                'label_attr': {'class':'form-label required'},
+                'row_attr': {'class':'mb-3'}
+            }) }}
+        </div>
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Informations générales</h6>
+            <small class="mb-3">Ces champs ne sont a remplir que si la page sélectionnée est "Accueil"</small>
+            {{ form_row(form.title, {
+                'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                'label_attr':{'class':'form-label'},
+                'row_attr': {'class':'input-group input-group-outline mb-3'}
+            }) }}
+            <div class="d-flex">
+                <div class="colorpicker form-group me-4">
+                    <label for="">Couleur du fond</label>
+                    {{ form_widget(form.bg_color, {'attr': { 'class':'coloris', 'value': bgColor}}) }}
+                </div>
+                <div class="colorpicker form-group">
+                    <label for="">Couleur du texte</label>
+                    {{ form_widget(form.color, {'attr': { 'class':'coloris', 'value': color }}) }}
+                </div>
+            </div>
+            {{ form_row(form.position, {
+                'attr': {'class':'form-control'},
+                'label_attr': {'class':'form-label'},
+                'row_attr': {'class':'mb-3'}
+            }) }}
+        </div>
+    </div>
+
+    {% if editMode %}
+        {{ form_widget(form.save, { 'label': 'Modifier', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/back/script.js') }}"></script>
+    <script src="{{ asset('js/back/coloris.min.js') }}"></script>
+
+    <script>
+        Coloris({
+            el: '.coloris',
+            theme: 'large',
+            wrap: true,
+            swatches: [
+                '#d545af',
+                '#EC407A',
+                '#1a1e23',
+                '#f8f9fa',
+            ]
+        });
+    </script>
+{% endblock %}

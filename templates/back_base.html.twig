@@ -10,6 +10,9 @@
         <link href="{{ asset('css/back/material-dashboard.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/back/style.css') }}" rel="stylesheet" />
 
+        {# TINY MCE JAVASCRIPT (place on top before window load) #}
+        <script src="{{ asset('js/back/tinymce/tinymce.min.js') }}"></script>
+
         <style>
             @font-face {
                 font-family: 'icomoon';
@@ -119,7 +122,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ nav == 'Pictos' ? 'bg-gradient-primary' : '' }} nav-link text-white">
+                        <a class="{{ nav == 'pictos' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="{{ path('pictos') }}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">draw</i>
                             </div>
@@ -131,7 +134,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Accueil</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ nav == 'Présentation' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                        <a class="{{ nav == 'bio' ? 'bg-gradient-primary' : '' }} nav-link text-white " href="{{ path('bio') }}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">menu_book</i>
                             </div>
@@ -262,10 +265,26 @@
     <script src="{{ asset('js/back/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/back/material-dashboard.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        window.Scrollbar.init(document.querySelector('#my-scrollbar'));
+        tinymce.init({
+            selector: 'textarea',
+            height: 300,
+            relative_urls: false,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste imagetools wordcount",
+                'image code'
+            ],
+            toolbar: "insertfile undo redo | image code | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            // content_css: [
+            //     'css/back/material-dashboard.css',
+            // ]
+        });
     </script>
+
 {% endblock %}
 
 </body>

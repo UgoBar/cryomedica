@@ -35,8 +35,8 @@ class AdminController extends AbstractController
     #[Route('/admin/logout', name: 'logout')]
     public function logout(): Response
     {
-        $this->helper->session->set('connected', false);
-        $this->helper->session->set('user', false);
+        $this->helper->session->remove('connected');
+        $this->helper->session->remove('user');
         return $this->redirectToRoute('login');
     }
 }

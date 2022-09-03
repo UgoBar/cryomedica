@@ -3,7 +3,9 @@
 {% block body %}
 
     <a href="{{ path('banners') }}" class="btn btn-secondary mb-4"><i class="material-icons text-white pe-2">keyboard_backspace</i>Retour à la liste</a>
-        {{ form_start(form, {'attr': {'class': 'banner-form'}}) }}
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
         <div class="col-lg-6 col-12">
             <div class="card p-4 mb-4">
                 <h6 class="text-uppercase pink font-weight-bolder mb-3">Bannière</h6>
@@ -16,9 +18,9 @@
                 {{ form_row(form.media.imageFile) }}
                 <label for="cryo_banner_media_imageFile_file">
                     <span id="file-upload-btn" class="btn btn-primary">
-                    <i class="material-icons text-white pe-2" aria-hidden="true">download_for_offline</i>Drag or clic
-                </span>
-                    <p class="text-secondary text-center">Dimensions conseillées : <b>1920x740 px</b>. Taille max : <b>2 Mo</b></p>
+                        <i class="material-icons text-white pe-2" aria-hidden="true">download_for_offline</i>Drag or clic
+                    </span>
+                    <p class="text-secondary text-center">Taille max : <b>2 Mo</b></p>
                     {% if vich_uploader_asset(media, 'imageFile') is null %}
                         <img id="file-image" src="{{ asset('img/default-drop-zone.png') }}" alt="image par défaut"/>
                     {% else %}
@@ -81,7 +83,4 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/back/script.js') }}"></script>
-    <script>
-
-    </script>
 {% endblock %}

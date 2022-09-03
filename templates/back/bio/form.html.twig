@@ -1,0 +1,83 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
+    <div class="col-lg-6 col-12">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Activation</h6>
+            <small class="mb-3">Ce bouton active ou désactive l'affichage de la présentation sur le site</small>
+            <div class="input-switch">
+                <label class="text-uppercase font-weight-bold" for="cryo_bio_isActive">Off</label>
+                {{ form_widget(form.isActive, {'attr': {'class':'input', 'required':false},}) }}
+                {#                {{ bio.isActive ? 'checked' : '' }}#}
+                <label for="cryo_bio_isActive" class="switch"></label>
+                <label class="text-uppercase font-weight-bold" for="cryo_bio_isActive">On</label>
+            </div>
+        </div>
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-3">Télécharger une image</h6>
+            {{ form_row(form.media.alt, {
+                'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                'label_attr':{'class':'form-label'},
+                'row_attr': {'class':'input-group input-group-outline'}
+            }) }}
+            <small class="text-secondary">Le <b>alt</b> sert à l'audio-description des images pour les non-voyants.</small>
+            {{ form_row(form.media.imageFile) }}
+            <label for="cryo_bio_media_imageFile_file">
+                <span id="file-upload-btn" class="btn btn-primary">
+                    <i class="material-icons text-white pe-2" aria-hidden="true">download_for_offline</i>Drag or clic
+                </span>
+                <p class="text-secondary text-center">Taille max : <b>2 Mo</b></p>
+                {% if vich_uploader_asset(media, 'imageFile') is null %}
+                    <img id="file-image" src="{{ asset('img/default-drop-zone.png') }}" alt="image par défaut"/>
+                {% else %}
+                    <img id="file-image" src="{{  vich_uploader_asset(media, 'imageFile') }}" style="width:75%; height:auto;">
+                {% endif %}
+                <div class="position-relative">
+                    <div id="start" style="left: 0; top: 0; opacity: 0; position: absolute;">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <div></div>
+                        <span id="file-upload-btn" class="btn btn-primary"></span>
+                        <div id="notimage" class="hidden"></div>
+                    </div>
+                    <div id="response" class="hidden">
+                        <div id="messages" class="pink"></div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-12" id="fileDrag">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Premier paragraphe</h6>
+            {{ form_row(form.firstText, {
+                'attr': {'class':'form-group ps-3'},
+                'row_attr': {'class':'form-control mb-3'}
+            }) }}
+        </div>
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Second paragraphe</h6>
+            {{ form_row(form.secondText, {
+                'attr': {'class':'form-group ps-3'},
+                'row_attr': {'class':'form-control mb-3'}
+            }) }}
+        </div>
+    </div>
+
+    {% if editMode %}
+        {{ form_widget(form.save, { 'label': 'Modifier', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/back/script.js') }}"></script>
+{% endblock %}
