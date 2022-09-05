@@ -1,0 +1,93 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
+    <div class="col-lg-6 col-12">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Infos générales</h6>
+            <small class="mb-2 mt-3">Statut</small>
+            <div class="input-switch mb-3">
+                <label class="text-uppercase font-weight-bold ms-0" for="cryo_centers_is_open">Fermé</label>
+                {{ form_widget(form.is_open, {'attr': {'class':'input', 'required':false},}) }}
+                <label for="cryo_centers_is_open" class="switch"></label>
+                <label class="text-uppercase font-weight-bold" for="cryo_centers_is_open">Ouvert</label>
+            </div>
+            {{ form_row(form.name, {
+                'attr': { 'class':'form-control pt-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                'label_attr':{'class':'form-label'},
+                'row_attr': {'class':'input-group input-group-outline'}
+            }) }}
+        </div>
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-2">Coordonnées</h6>
+            <small class="text-secondary mb-3">
+                C'est obligatoire pour pouvoir renseigner le centre sur la carte.<br>
+                Ce <b><a href="https://www.latlong.net/convert-address-to-lat-long.html" target="_blank">site</a></b> permet de retrouver les coordonnées depuis l'adresse.
+            </small>
+            <div class="d-flex mb-3">
+                {{ form_row(form.latitude, {
+                    'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline w-45 me-2'}
+                }) }}
+                {{ form_row(form.longitude, {
+                    'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline w-45'}
+                }) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-12" id="fileDrag">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Adresse</h6>
+            <div class="my-3">
+                {{ form_row(form.address, {
+                    'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'}
+                }) }}
+            </div>
+            <div class="d-flex mb-3">
+                {{ form_row(form.city, {
+                    'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline w-45 me-2'}
+                }) }}
+                {{ form_row(form.zip, {
+                    'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline w-45'}
+                }) }}
+            </div>
+        </div>
+    </div>
+
+    {% if editMode %}
+        {{ form_widget(form.save, { 'label': 'Modifier', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const inputsText = document.querySelectorAll('input[type=text]') ?? false;
+
+        if (inputsText) {
+            inputsText.forEach( (input) => {
+                if(input.value) {
+                    input.parentNode.classList.add('is-filled');
+                }
+            })
+        }
+    </script>
+{% endblock %}

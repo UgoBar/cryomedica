@@ -34,8 +34,8 @@ class PictoController extends AbstractController
             ) ?? false;
 
             $elecPictos = $this->helper->em->getRepository(CryoPicto::class)->findBy(
-                    ['page' => 'elec'],
-                    ['position' => 'ASC']
+                ['page' => 'elec'],
+                ['position' => 'ASC']
             ) ?? false;
 
             if(isset($_POST['home-order'])) {

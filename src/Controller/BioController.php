@@ -48,9 +48,10 @@ class BioController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $data = $form->getData();
+
                 // First record Media
                 $media->setImageFile($data->getMedia()->getImageFile());
-                $media->setAlt($data->getMedia()->getAlt());
+                $media->setAlt($data->getMedia()->getAlt() ?? '');
                 $this->helper->em->persist($media);
 
                 // Then record Picto with previously created Media

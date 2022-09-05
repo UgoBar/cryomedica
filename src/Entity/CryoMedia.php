@@ -19,18 +19,10 @@ class CryoMedia
     #[ORM\Column()]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
-    private ?string $alt = null;
-
     #[Vich\UploadableField(mapping: 'uploads', fileNameProperty: 'picture')]
-//    #[Assert\File(
-//        maxSize: '2048k',
-//        mimeTypes: []
-//    )]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $picture = null;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoBanner::class)]
@@ -61,6 +53,9 @@ class CryoMedia
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoBio::class)]
     private Collection $cryoBios;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $alt = null;
+
     /**
      * @param \Symfony\Component\HttpFoundation\File\File|null $imageFile
      */
@@ -88,18 +83,6 @@ class CryoMedia
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(string $alt): self
-    {
-        $this->alt = $alt;
 
         return $this;
     }
@@ -220,6 +203,18 @@ class CryoMedia
                 $cryoBio->setMedia(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(?string $alt): self
+    {
+        $this->alt = $alt;
 
         return $this;
     }

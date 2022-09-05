@@ -1,0 +1,113 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" type="submit" style="width: fit-content" href="{{ path('create_center') }}">Ajouter un centre</a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white ps-3">Liste des centres</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Adresse</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ville</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Zip</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Latitude</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Longitude</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for center in centers %}
+                                <tr id="center-{{ center.id }}">
+                                    <td>
+                                        <h6 class="mb-0 text-sm ps-3">{{ center.name }}</h6>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ center.address }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ center.city }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ center.zip }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold  text-center">{{ center.latitude }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold text-center">{{ center.longitude }}</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        {% if center.isOpen %}
+                                            <span class="badge badge-sm bg-gradient-success">Ouvert</span>
+                                        {% else %}
+                                            <span class="badge badge-sm bg-gradient-danger">Fermé</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="{{ path('edit_center', { 'id': center.id }) }}"><i class="material-icons">edit</i></a>
+                                        <a onclick="launchDeleteModal({{ center.id }}, '{{ center.name }}')" class="delete-button"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer le centre <br><b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_center') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Le centre ' + name + ' a bien été supprimé',
+                                'success'
+                            );
+                            $('#center-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

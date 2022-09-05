@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CryoCenters;
+use App\Entity\CryoContact;
 use App\Repository\CryoCentersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -119,6 +120,30 @@ class FrontController extends AbstractController
 
 
                     if(!$errors) {
+
+                        // Set record in database
+                        $contact = new CryoContact();
+
+                        $contact->setCenter($center);
+                        $contact->setFirstname($firstname);
+                        $contact->setLastname($lastname);
+                        $contact->setPhone($phone);
+                        $contact->setEmail($email);
+                        $contact->setCreatedAt(new \DateTimeImmutable());
+
+                        if($commitment === 'become-partner') {
+                            $contact->setCompany($company);
+                            $contact->setCommitment($commitment);
+                        } else if($commitment === 'pre-order' && $isCenterOpen) {
+                            $contact->setSessions($sessionNumber);
+                            $contact->setCommitment($commitment);
+                        } else if($commitment === 'pre-order' && !$isCenterOpen) {
+                            $contact->setCommitment('interest');
+                        }
+
+                        $this->em->persist($contact);
+                        $this->em->flush();
+                        /*
                         // Send mail
                         // $mailTo  = 'pfavre92@icloud.com';
                         $mailTo  = 'ugo17190@gmail.com';
@@ -131,7 +156,7 @@ class FrontController extends AbstractController
                         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
                         $headers .= 'X-Mailer: PHP/' . phpversion();
 
-                        mail($mailTo, $subject, $content, $headers);
+                        mail($mailTo, $subject, $content, $headers); */
                         // Redirect
                         return $this->redirectToRoute('mailSent');
                     }

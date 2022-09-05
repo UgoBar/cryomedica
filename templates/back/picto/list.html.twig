@@ -24,7 +24,7 @@
                                     <option value="{{ i }}" {{ picto.position == i ? 'selected' : '' }}>{{ i }}</option>
                                 {% endfor %}
                             </select>
-                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }}, '{{ picto.media.picture }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
                         </div>
                     </div>
                 {% endfor %}
@@ -56,7 +56,7 @@
                                     <option value="{{ i }}" {{ picto.position == i ? 'selected' : '' }}>{{ i }}</option>
                                 {% endfor %}
                             </select>
-                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ picto.id }}, {{ picto.media.picture }})"><i class="material-icons" aria-hidden="true">delete</i></span>
                         </div>
                     </div>
                 {% endfor %}
@@ -72,10 +72,10 @@
     {{ parent() }}
 
     <script>
-        const launchDeleteModal = (id) => {
+        const launchDeleteModal = (id, name) => {
             Swal.fire({
                 title: 'Attention',
-                text: "La suppression est irréversible",
+                html: "Attention, supprimer la photo <b>" + name + " </b><br> est irréversible.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -95,7 +95,7 @@
                         success: (data) => {
                             Swal.fire(
                                 'Deleted!',
-                                'La bannière a bien été supprimée',
+                                'Le picto ' + name + ' a bien été supprimé',
                                 'success'
                             );
                             $('#picto-' + id).remove();

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CryoCentersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CryoCentersRepository::class)]
@@ -33,6 +35,14 @@ class CryoCenters
 
     #[ORM\Column]
     private ?bool $is_open = null;
+
+    #[ORM\OneToMany(mappedBy: 'center', targetEntity: CryoContact::class)]
+    private Collection $cryoContacts;
+
+    public function __construct()
+    {
+        $this->cryoContacts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,36 @@ class CryoCenters
     public function setIsOpen(bool $is_open): self
     {
         $this->is_open = $is_open;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoContact>
+     */
+    public function getCryoContacts(): Collection
+    {
+        return $this->cryoContacts;
+    }
+
+    public function addCryoContact(CryoContact $cryoContact): self
+    {
+        if (!$this->cryoContacts->contains($cryoContact)) {
+            $this->cryoContacts[] = $cryoContact;
+            $cryoContact->setCenter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoContact(CryoContact $cryoContact): self
+    {
+        if ($this->cryoContacts->removeElement($cryoContact)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoContact->getCenter() === $this) {
+                $cryoContact->setCenter(null);
+            }
+        }
 
         return $this;
     }

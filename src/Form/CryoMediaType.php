@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\CryoMedia;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -16,13 +17,15 @@ class CryoMediaType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
-                'delete_label' => 'Supprimer',
+                'delete_label' => 'Cocher pour supprimer',
                 'download_uri' => true,
                 'download_label' => false,
                 'asset_helper' => true,
                 'label' => false
             ])
-            ->add('alt')
+            ->add('alt', TextType::class, [
+                'required' => false
+            ])
         ;
     }
 

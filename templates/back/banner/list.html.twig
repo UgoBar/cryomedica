@@ -16,7 +16,7 @@
                                 <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
                                 <div class="card-actions">
                                     <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
-                                    <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                    <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }}, '{{ banner.media.picture }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
                                 </div>
                             </figure>
                             <div class="card-body">
@@ -49,7 +49,7 @@
                             <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
                             <div class="card-actions">
                                 <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
-                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }}, '{{ banner.media.picture }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
                             </div>
                         </figure>
                     </div>
@@ -72,7 +72,7 @@
                             <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
                             <div class="card-actions">
                                 <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
-                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }}, '{{ banner.media.picture }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
                             </div>
                         </figure>
                     </div>
@@ -95,7 +95,7 @@
                             <img src="{{ asset('img/' ~ banner.media.picture) }}" alt="{{ banner.media.alt }}">
                             <div class="card-actions">
                                 <a class="btn btn-secondary" href="{{ path('edit_banner', { 'id': banner.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
-                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }})"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                <span class="btn btn-danger" onclick="launchDeleteModal({{ banner.id }}, '{{ banner.media.picture }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
                             </div>
                         </figure>
                     </div>
@@ -110,10 +110,10 @@
     {{ parent() }}
 
     <script>
-        const launchDeleteModal = (id) => {
+        const launchDeleteModal = (id, name) => {
             Swal.fire({
                 title: 'Attention',
-                text: "La suppression est irréversible",
+                html: "Attention, supprimer la photo <b>" + name + " </b><br> est irréversible.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -133,7 +133,7 @@
                         success: (data) => {
                             Swal.fire(
                                 'Deleted!',
-                                'La bannière a bien été supprimée',
+                                'La bannière ' + name + ' a bien été supprimée',
                                 'success'
                             );
                             $('#banner-' + id).remove();

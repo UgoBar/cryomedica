@@ -47,6 +47,7 @@
                     </div>
                 </div>
             </label>
+            <div id="delete-wrapper"></div>
         </div>
     </div>
 
@@ -80,4 +81,13 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/back/script.js') }}"></script>
+
+    <script>
+        deleteLabel = document.querySelector('label[for=cryo_bio_media_imageFile_delete]');
+        deleteInput = document.getElementById('cryo_bio_media_imageFile_delete');
+        if(deleteInput && deleteLabel) {
+            document.getElementById('delete-wrapper').appendChild(deleteLabel);
+            document.getElementById('delete-wrapper').appendChild(deleteInput);
+        }
+    </script>
 {% endblock %}

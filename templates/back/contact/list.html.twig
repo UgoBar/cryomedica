@@ -1,0 +1,132 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100 ps-3">
+        <h5 class="ps-0">Trier par intérêt</h5>
+        <a class="btn bg-gradient-{{ subnav == 'all' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}">Tous</a>
+        <a class="btn bg-gradient-{{ subnav == 'become-partner' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=become-partner">Devenir Partenaire</a>
+        <a class="btn bg-gradient-{{ subnav == 'pre-order' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=pre-order">Pré-achat</a>
+        <a class="btn bg-gradient-{{ subnav == 'interest' ? 'primary' : 'secondary' }} mb-4" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=interest">Intérêt</a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white ps-3">Liste des contacts</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tél</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Engamement</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Entreprise</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Centre</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ville</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Séances</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for contact in contacts %}
+                                <tr id="contact-{{ contact.id }}">
+                                    <td>
+                                        <h6 class="mb-0 text-sm ps-3">{{ contact.firstname }} {{ contact.lastname }}</h6>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.email }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.phone }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">
+                                            {% if contact.commitment == 'pre-order' %}
+                                                Pré-achat
+                                            {% elseif contact.commitment == 'interest' %}
+                                                Intérêt
+                                            {% else %}
+                                                Partenaire
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.company }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.center.name }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.center.city }}</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        {% if contact.center.isOpen %}
+                                            <span class="badge badge-sm bg-gradient-success">Ouvert</span>
+                                        {% else %}
+                                            <span class="badge badge-sm bg-gradient-danger">Fermé</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold text-center">{{ contact.sessions }}</p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a onclick="launchDeleteModal({{ contact.id }}, '{{ contact.firstname }} {{ contact.lastname }}')" class="delete-button"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer le contact <br><b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_contact') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Le contact ' + name + ' a bien été supprimé',
+                                'success'
+                            );
+                            $('#contact-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

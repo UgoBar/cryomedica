@@ -321,6 +321,24 @@ input[type=number] {
 }
 /** END INPUT SWITCH **/
 
+#delete-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#delete-wrapper label {
+    margin: 0 10px 0 0;
+    color: var(--pink);
+    font-weight: 500;
+}
+
+.delete-button {
+    cursor: pointer;
+}
+.delete-button:hover {
+    color: var(--pink);
+}
+
 @media screen and (max-width: 992px) {
     #fileDrag {
         margin-left: 0;
