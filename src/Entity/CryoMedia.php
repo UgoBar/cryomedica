@@ -37,6 +37,7 @@ class CryoMedia
         $this->cryoBanners = new ArrayCollection();
         $this->cryoPictos = new ArrayCollection();
         $this->cryoBios = new ArrayCollection();
+        $this->cryoCustomers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,6 +56,9 @@ class CryoMedia
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $alt = null;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoCustomer::class)]
+    private Collection $cryoCustomers;
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\File|null $imageFile
@@ -215,6 +219,36 @@ class CryoMedia
     public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoCustomer>
+     */
+    public function getCryoCustomers(): Collection
+    {
+        return $this->cryoCustomers;
+    }
+
+    public function addCryoCustomer(CryoCustomer $cryoCustomer): self
+    {
+        if (!$this->cryoCustomers->contains($cryoCustomer)) {
+            $this->cryoCustomers[] = $cryoCustomer;
+            $cryoCustomer->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoCustomer(CryoCustomer $cryoCustomer): self
+    {
+        if ($this->cryoCustomers->removeElement($cryoCustomer)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoCustomer->getMedia() === $this) {
+                $cryoCustomer->setMedia(null);
+            }
+        }
 
         return $this;
     }

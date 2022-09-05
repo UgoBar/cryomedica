@@ -53,18 +53,16 @@ class ContactController extends AbstractController
     }
 
     #[Route('/admin/contact/delete', name: 'delete_contact')]
-    public function delete(Request $request): JsonResponse | Response
+    public function delete(Request $request): JsonResponse
     {
-        if ($this->helper->verifyConnection()) {
-            if($request->request->all()['id'] && $this->helper->verifyConnection()) {
-                $contactId = (int)$request->request->all()['id'];
-                $contact = $this->helper->em->getRepository(CryoContact::class)->find($contactId);
-                $this->helper->em->remove($contact);
-                $this->helper->em->flush();
-                return new JsonResponse(['actionResponse'=>'success']);
-            }
-            return new JsonResponse(['actionResponse'=>'unauthorized']);
+        if($request->request->all()['id'] && $this->helper->verifyConnection()) {
+            $contactId = (int)$request->request->all()['id'];
+            $contact = $this->helper->em->getRepository(CryoContact::class)->find($contactId);
+            $this->helper->em->remove($contact);
+            $this->helper->em->flush();
+            return new JsonResponse(['actionResponse'=>'success']);
         }
-        return $this->redirectToRoute('login');
+        return new JsonResponse(['actionResponse'=>'unauthorized']);
+
     }
 }

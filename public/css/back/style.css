@@ -238,10 +238,18 @@ input[type=number] {
     height: 0;
     padding-top: 15%;
     margin-left: 15px;
+    margin-bottom: 3.5em;
+}
+.customer-card {
+    background-color: white;
 }
 .picto-card img {
     width: 120px;
     height: 120px;
+}
+.customer-card img {
+    width: 80%;
+    height: unset;
 }
 .inner-card {
     position: absolute;
@@ -339,17 +347,89 @@ input[type=number] {
     color: var(--pink);
 }
 
+.property-card h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+}
+
+.property-card p {
+    font-size: 12px;
+}
+
+.property-card, .property-image, .property-description {
+    width: 12em;
+}
+
+.property-card {
+    height: 12em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    overflow: hidden;
+    margin: .4em;
+}
+
+.property-image {
+    height: 9em;
+    padding: 1em 2em;
+    position: absolute;
+    top: 0;
+    -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #FAFAFC;
+}
+
+.property-description {
+    background-color: var(--dark);
+    color: #FAFAFC;
+    height: 3em;
+    position: absolute;
+    bottom: 0;
+    -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    padding: 0.5em 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.property-card:hover .property-description {
+    height: 2em;
+    padding: 0px 1em;
+}
+.property-card:hover .property-image {
+    height: 10em;
+}
+
+@media screen and (max-width: 1568px) {
+    .picto-card {
+        width: 30.333%;
+        padding-top: 30.3333%;
+    }
+}
+
 @media screen and (max-width: 992px) {
     #fileDrag {
         margin-left: 0;
     }
     .banner-card .not-home-figure {
         height: 300px;
-    }
-    .picto-card {
-        width: 30.333%;
-        padding-top: 30.3333%;
-        margin-bottom: 3.5em;
     }
     .picto-card p {
         font-size: 15px;
@@ -368,5 +448,8 @@ input[type=number] {
         padding-top: 80%;
         margin: 0 auto;
         margin-bottom: 3.5em;
+    }
+    .property-card, .property-image, .property-description {
+        width: 9em;
     }
 }

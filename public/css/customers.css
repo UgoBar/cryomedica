@@ -273,7 +273,7 @@ blockquote::before {
     font-family: 'Montserrat', serif;
 }
 
-@media screen and (max-width: 600) {
+@media screen and (max-width: 600px) {
     .property-card, .property-image, .property-description {
         width: 9em;
     }

@@ -102,6 +102,7 @@ class PictoController extends AbstractController
                     $picto->setBgColor($data->getBgColor());
                 }
                 $picto->setPage($data->getPage());
+                $picto->setPosition($data->getPosition());
                 $picto->setMedia($media);
                 $this->helper->em->persist($picto);
                 // Flush in database
@@ -131,8 +132,7 @@ class PictoController extends AbstractController
     {
         if($request->request->all()['id'] && $this->helper->verifyConnection()) {
             $pictoId = (int)$request->request->all()['id'];
-            $pictoRepo = $this->helper->em->getRepository(CryoPicto::class);
-            $picto = $pictoRepo->find($pictoId);
+            $picto = $this->helper->em->getRepository(CryoPicto::class)->find($pictoId);
             $this->helper->em->remove($picto);
             $this->helper->em->flush();
             return new JsonResponse(['actionResponse'=>'success']);

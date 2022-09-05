@@ -8,7 +8,7 @@
 
     {% if homePictos %}
         <form action="" method="post">
-            <div class="row ms-0 no-gutter w-100" style="margin-bottom: 5em">
+            <div class="row ms-0 no-gutter w-100">
                 <h6 class="text-uppercase pink font-weight-bolder mb-2">Page d'accueil</h6>
                 {% for picto in homePictos %}
 
@@ -30,7 +30,7 @@
                 {% endfor %}
             </div>
 
-            <button type="submit" name="home-order" class="btn btn-secondary">Changer l'ordre</button>
+            <button type="submit" name="home-order" class="btn btn-secondary ms-3">Changer l'ordre</button>
         </form>
     {% endif %}
 
@@ -40,7 +40,7 @@
 
     {% if elecPictos %}
         <form action="" method="post">
-            <div class="row ms-0 no-gutter w-100" style="margin-bottom: 5em">
+            <div class="row ms-0 no-gutter w-100">
                 <h6 class="text-uppercase pink font-weight-bolder mb-2">Page cabines électriques</h6>
                 {% for picto in elecPictos %}
 
@@ -62,7 +62,7 @@
                 {% endfor %}
             </div>
 
-            <button type="submit" name="elec-order" class="btn btn-secondary">Changer l'ordre</button>
+            <button type="submit" name="elec-order" class="btn btn-secondary ms-3">Changer l'ordre</button>
         </form>
     {% endif %}
 

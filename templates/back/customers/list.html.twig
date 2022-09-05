@@ -1,0 +1,77 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" type="submit" style="width: fit-content" href="{{ path('create_customer') }}">Ajouter un client</a>
+    </div>
+
+    {% if customers %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Les clients</h6>
+                {% for customer in customers %}
+
+                    <div id="customer-{{ customer.id }}" class="picto-card customer-card">
+                        <div class="inner-card">
+                            <img src="{{ asset('img/' ~ customer.media.picture) }}" alt="{{ customer.media.alt }}">
+                            <h6>{{ customer.name }}</h6>
+                        </div>
+                        <div class="card-footer-actions">
+                            <a class="btn btn-secondary no-radius" href="{{ path('edit_customer', { 'id': customer.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                            <select name="customer-{{ customer.id }}-position" id="customer-{{ customer.id }}" class="custom-select">
+                                {% for i in 1..customers|length %}
+                                    <option value="{{ i }}" {{ customer.position == i ? 'selected' : '' }}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="btn btn-danger no-radius" onclick="launchDeleteModal({{ customer.id }}, '{{ customer.name }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" name="order" class="btn btn-secondary ms-3">Changer l'ordre</button>
+        </form>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer le client <b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_customer') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Le client ' + name + ' a bien été supprimé',
+                                'success'
+                            );
+                            $('#customer-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}
