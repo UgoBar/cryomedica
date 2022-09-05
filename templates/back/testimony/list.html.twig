@@ -1,0 +1,70 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" style="width: fit-content" href="{{ path('create_testimonial') }}">Ajouter un témoignage</a>
+    </div>
+
+    {% if testimonials %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Les témoignages</h6>
+                {% for testimony in testimonials %}
+
+                    <div class="testimonial-card" id="testimony-{{ testimony.id }}">
+                        <figure>
+                            <img src="{{ asset('img/' ~ testimony.media.picture) }}" alt="{{ testimony.media.alt }}">
+                        </figure>
+                        <div class="testimonial-card-actions">
+                            <h6>{{ testimony.signature }}</h6>
+                            <a class="btn btn-secondary" href="{{ path('edit_testimonial', { 'id': testimony.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                            <span class="btn btn-danger" onclick="launchDeleteModal({{ testimony.id }}, '{{ testimony.signature }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer le témoignage du client <br><b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_testimonial') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Le témoignage du client ' + name + ' a bien été supprimé',
+                                'success'
+                            );
+                            $('#testimony-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

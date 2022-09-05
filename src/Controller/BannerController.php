@@ -109,7 +109,7 @@ class BannerController extends AbstractController
                 if($data->getPage() === 'home') {
                     $banner->setTitle($data->getTitle());
                     $banner->setSubtitle($data->getSubtitle());
-                    $banner->setPosition($data->getPosition());
+                    $banner->setPosition((int)$data->getPosition());
                 }
                 $banner->setPage($data->getPage());
                 $banner->setMedia($media);

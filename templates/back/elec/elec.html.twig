@@ -1,0 +1,245 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <button class="btn bg-gradient-primary mb-4" type="button" style="width: fit-content" onclick="launchAddModal({{ elec.id }})">Ajouter une ligne au tableau</button>
+        <small class="ms-2">Si une modification n'est pas affichée en temps direct il faut <a href="{{ path('elec') }}">rafraîchir la page</a></small>
+    </div>
+
+    <!-- FORM Modal -->
+    <div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content p-4">
+
+                <h5 class="modal-title" id="exampleModalLabel">Ajout d'une colonne</h5>
+
+                <div class="input-group input-group-outline mt-4">
+                    <label class="form-label" for="carac-key">Nom de la caractéristique</label>
+                    <input type="text" id="carac-key" name="carac-key" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                </div>
+                <div class="input-group input-group-outline mt-3 mb-4">
+                    <label class="form-label" for="carac-value">Déscription de la caractéristique</label>
+                    <input type="text" id="carac-value" name="carac-value" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                </div>
+
+                <div class="d-flex justify-content-center" id="action-section">
+                    <button type="button" class="btn btn-primary w-fit-content me-3 action-button"
+                            onclick="addCaracRow({{ elec.id }}, document.querySelector('#carac-key').value, document.querySelector('#carac-value').value)">
+                        Ajouter
+                    </button>
+                    <button type="button" class="btn btn-secondary w-fit-content" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white ps-3">Liste des centres</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Titre</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for carac in elecArray %}
+                                <tr id="carac-{{ carac.id }}">
+                                    <td>
+                                        <h6 class="mb-0 text-sm ps-3" id="row-title-{{ carac.id }}">{{ carac.title }}</h6>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold" id="row-description-{{ carac.id }}">{{ carac.description }}</p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a onclick="launchUpdateModal({{ carac.id }}, '{{ carac.title }}', '{{ carac.description }}')"><i class="material-icons">edit</i></a>
+                                        <a onclick="launchDeleteModal({{ carac.id }}, '{{ carac.title }}')" class="delete-button"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_start(form, {'attr': {'class': 'flex-form direction-column'}}) }}
+
+    <div class="card p-4 mb-4">
+        <h6 class="text-uppercase pink font-weight-bolder mb-0">Texte d'introduction</h6>
+        {{ form_row(form.text, {
+            'attr': {'class':'form-group ps-3'},
+            'row_attr': {'class':'form-control mb-3'}
+        }) }}
+    </div>
+
+    {% if editMode %}
+        {{ form_widget(form.save, { 'label': 'Modifier', 'attr': { 'class': 'btn btn-primary w-fit-content' }}) }}
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary w-fit-content' }}) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        const formModal = new bootstrap.Modal(document.getElementById('form-modal'));
+        const caracKey = document.querySelector('#carac-key');
+        const caracValue = document.querySelector('#carac-value');
+
+        const launchAddModal = (elecId) => {
+            caracKey.value = '';
+            caracKey.parentNode.classList.remove('is-filled');
+            caracValue.value = '';
+            caracValue.parentNode.classList.remove('is-filled');
+            document.querySelector('#action-section').innerHTML = `
+                <button type="button" class="btn btn-primary w-fit-content me-3 action-button" onclick="addCaracRow(${elecId}, document.querySelector('#carac-key').value, document.querySelector('#carac-value').value)">Ajouter</button>
+                <button type="button" class="btn btn-secondary w-fit-content" data-bs-dismiss="modal">Close</button>
+            `;
+            formModal.show();
+        }
+
+        const launchUpdateModal = (caracId, key, value) => {
+            caracKey.value = key;
+            caracKey.parentNode.classList.add('is-filled');
+            caracValue.value = value;
+            caracValue.parentNode.classList.add('is-filled');
+
+            document.querySelector('#action-section').innerHTML = `
+                <button type="button" class="btn btn-primary w-fit-content me-3 action-button" onclick="updateCaracRow(${caracId}, document.querySelector('#carac-key').value, document.querySelector('#carac-value').value)">Modifier</button>
+                <button type="button" class="btn btn-secondary w-fit-content" data-bs-dismiss="modal">Close</button>
+            `;
+
+            formModal.show();
+        }
+
+        const addCaracRow = (elecId, title, description) => {
+            $.ajax({
+                url: "{{ path('add_carac') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'elecId': elecId,
+                    'title': title,
+                    'description': description
+                },
+                async: true,
+                error: () => {
+                    formModal.hide();
+                    Swal.fire(
+                        'Erreur!',
+                        'Il y a eu une erreur dans l\'envoi',
+                        'error'
+                    );
+                },
+                success: (data) => {
+                    formModal.hide();
+                    Swal.fire(
+                        'Ajouté!',
+                        'La ligne a bien été ajoutée',
+                        'success'
+                    );
+                    // Ajouter la ligne dans le html dynamiquement
+                    document.querySelector('tbody').innerHTML += `
+                        <tr id="carac-${data.caracId}">
+                            <td>
+                                <h6 class="mb-0 text-sm ps-3">${title}</h6>
+                            </td>
+                            <td>
+                                <p class="mb-0 text-xs font-weight-bold">${description}</p>
+                            </td>
+                            <td class="align-middle">
+                                <a onclick="launchUpdateModal(${data.caracId}, '${title}', '${description}')"><i class="material-icons">edit</i></a>
+                                <a onclick="launchDeleteModal(${data.caracId}, '${title}')" class="delete-button"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    `
+                }
+            })
+        }
+
+        const updateCaracRow = (caracId, title, description) => {
+            $.ajax({
+                url: "{{ path('edit_carac') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "caracId": caracId,
+                    "title": title,
+                    'description': description
+                },
+                async: true,
+                error: () => {
+                    formModal.hide();
+                    Swal.fire(
+                        'Erreur!',
+                        'Il y a eu une erreur dans l\'envoi',
+                        'error'
+                    );
+                },
+                success: (data) => {
+                    formModal.hide();
+                    Swal.fire(
+                        'Modifié!',
+                        'La ligne a bien été modifiée',
+                        'success'
+                    );
+                    // Modifier la ligne dans le html dynamiquement
+                    document.querySelector('#row-title-' + caracId).innerHTML = title;
+                    document.querySelector('#row-description-' + caracId).innerHTML = description;
+                }
+            })
+        }
+
+        const launchDeleteModal = (caracId, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer la ligne <b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_carac') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "caracId": caracId
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'La ligne ' + name + ' a bien été supprimée',
+                                'success'
+                            );
+                            $('#carac-' + caracId).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

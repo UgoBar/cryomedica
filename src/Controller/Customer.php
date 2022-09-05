@@ -3,18 +3,14 @@
 
 namespace App\Controller;
 
-
-use App\Entity\CryoContact;
+use App\Helper\Helper;
 use App\Entity\CryoCustomer;
 use App\Entity\CryoMedia;
-use App\Entity\CryoPicto;
 use App\Form\CryoCustomerType;
-use App\Form\CryoPictoType;
-use App\Helper\Helper;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class Customer extends AbstractController
@@ -114,7 +110,7 @@ class Customer extends AbstractController
     {
         if($request->request->all()['id'] && $this->helper->verifyConnection()) {
             $customerId = (int)$request->request->all()['id'];
-            $customer = $this->helper->em->getRepository(CryoContact::class)->find($customerId);
+            $customer = $this->helper->em->getRepository(CryoCustomer::class)->find($customerId);
             $this->helper->em->remove($customer);
             $this->helper->em->flush();
             return new JsonResponse(['actionResponse'=>'success']);

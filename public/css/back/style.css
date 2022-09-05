@@ -3,7 +3,7 @@
 :root {
     --pink: #EC407A ;
     --dark: #1a1e23;
-    --shadow: 0 10px 25px rgba(0,0,0,.6);
+    --shadow: 0 10px 10px rgba(0,0,0,.1);
 }
 
 * {
@@ -67,6 +67,12 @@ a {
 .fs-15 { font-size: 15px; }
 .no-radius {
     border-radius: 0;
+}
+.direction-column {
+    flex-direction: column;
+}
+.w-fit-content {
+    width: fit-content;
 }
 
 .navbar-expand-lg .navbar-collapse {
@@ -363,6 +369,24 @@ input[type=number] {
     width: 12em;
 }
 
+.testimonial-card {
+    margin: 1em;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    background: white;
+    width: 33%;
+    border-radius: 20px;
+}
+.testimonial-card figure {
+    margin: 1em;
+}
+.testimonial-card img {
+    width: 140px;
+    height: 140px;
+    border-radius: 13px;
+}
+
 .property-card {
     height: 12em;
     display: -webkit-box;
@@ -434,6 +458,10 @@ input[type=number] {
     .picto-card p {
         font-size: 15px;
     }
+    .testimonial-card {
+        width: 46%;
+        margin: .5em;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -451,5 +479,8 @@ input[type=number] {
     }
     .property-card, .property-image, .property-description {
         width: 9em;
+    }
+    .testimonial-card {
+        width: 97%;
     }
 }

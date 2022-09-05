@@ -38,6 +38,7 @@ class CryoMedia
         $this->cryoPictos = new ArrayCollection();
         $this->cryoBios = new ArrayCollection();
         $this->cryoCustomers = new ArrayCollection();
+        $this->cryoTestimonies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,6 +60,9 @@ class CryoMedia
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoCustomer::class)]
     private Collection $cryoCustomers;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoTestimony::class)]
+    private Collection $cryoTestimonies;
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\File|null $imageFile
@@ -247,6 +251,36 @@ class CryoMedia
             // set the owning side to null (unless already changed)
             if ($cryoCustomer->getMedia() === $this) {
                 $cryoCustomer->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoTestimony>
+     */
+    public function getCryoTestimonies(): Collection
+    {
+        return $this->cryoTestimonies;
+    }
+
+    public function addCryoTestimony(CryoTestimony $cryoTestimony): self
+    {
+        if (!$this->cryoTestimonies->contains($cryoTestimony)) {
+            $this->cryoTestimonies[] = $cryoTestimony;
+            $cryoTestimony->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoTestimony(CryoTestimony $cryoTestimony): self
+    {
+        if ($this->cryoTestimonies->removeElement($cryoTestimony)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoTestimony->getMedia() === $this) {
+                $cryoTestimony->setMedia(null);
             }
         }
 
