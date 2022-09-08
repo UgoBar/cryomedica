@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
         <link href="{{ asset('css/back/material-dashboard.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/back/style.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/back/toast.css') }}" rel="stylesheet" />
 
         {# TINY MCE JAVASCRIPT (place on top before window load) #}
         <script src="{{ asset('js/back/tinymce/tinymce.min.js') }}"></script>
@@ -194,7 +195,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ nav == 'Azote' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                        <a class="{{ nav == 'azote' ? 'bg-gradient-primary' : '' }} nav-link text-white " href="{{ path('azote') }}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon-azote opacity-10"></i>
                             </div>
@@ -206,7 +207,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Historique</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ nav == 'Historique' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                        <a class="{{ nav == 'historic' ? 'bg-gradient-primary' : '' }} nav-link text-white " href="{{ path('historic') }}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">history_edu</i>
                             </div>
@@ -218,7 +219,7 @@
                         <h6 class="ps-4 ms-2 text-uppercase text-white font-weight-bolder opacity-8">Communication</h6>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ nav == 'Communication' ? 'bg-gradient-primary' : '' }} nav-link text-white ">
+                        <a class="{{ nav == 'about' ? 'bg-gradient-primary' : '' }} nav-link text-white" href="{{ path('back_about') }}">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">badge</i>
                             </div>
@@ -266,6 +267,7 @@
     <script src="{{ asset('js/back/material-dashboard.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/back/toast.js') }}"></script>
 
     <script>
         tinymce.init({

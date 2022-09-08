@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Controller;
 
+use App\Entity\CryoHistoric;
 use App\Entity\CryoMedia;
-use App\Entity\CryoTestimony;
-use App\Form\CryoTestimonyType;
+use App\Form\CryoHistoricType;
 use App\Helper\Helper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,9 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class Testimony extends AbstractController
+class HistoricController extends AbstractController
 {
-
     private Helper $helper;
 
     public function __construct(Helper $helper)
@@ -23,41 +21,45 @@ class Testimony extends AbstractController
         $this->helper = $helper;
     }
 
-    #[Route('/admin/temoignages', name: 'testimonials')]
-    public function pictos(Request $request): Response
+    #[Route('/admin/historic', name: 'historic')]
+    public function list(Request $request): Response
     {
         if($this->helper->verifyConnection()) {
 
             $flashbag = $this->helper->getFlashBag() ?? false;
 
-            $testimonials = $this->helper->em->getRepository(CryoTestimony::class)->findAll() ?? false;
+            $historic = $this->helper->em->getRepository(CryoHistoric::class)->findBy(
+                [],
+                ['date' => 'ASC']
+            ) ?? false;
 
-            return $this->render('back/testimony/list.html.twig', [
-                'nav' => 'testimonials',
-                'title' => 'Liste des témoignages',
-                'testimonials' => $testimonials,
+
+            return $this->render('back/historic/list.html.twig', [
+                'nav' => 'historic',
+                'title' => 'Historique',
+                'historic' => $historic,
                 'flashbag' => $flashbag,
             ]);
         }
         return $this->redirectToRoute('login');
     }
 
-    #[Route('/admin/temoignage/ajout', name: 'create_testimonial')]
-    #[Route('/admin/temoignage/edit/{id}', name: 'edit_testimonial')]
-    public function form(Request $request, CryoTestimony $testimony = null): Response
+    #[Route('/admin/historic/ajout', name: 'create_historic')]
+    #[Route('/admin/historic/edit/{id}', name: 'edit_historic')]
+    public function form(Request $request, CryoHistoric $historic = null): Response
     {
         if($this->helper->verifyConnection()) {
 
-            if(!$testimony) {
+            if(!$historic) {
                 $media = new CryoMedia();
-                $testimony = new CryoTestimony();
+                $historic = new CryoHistoric();
                 $editmode = false;
             } else {
                 $editmode = true;
-                $media = $testimony->getMedia();
+                $media = $historic->getMedia();
             }
 
-            $form = $this->createForm(CryoTestimonyType::class, $testimony);
+            $form = $this->createForm(CryoHistoricType::class, $historic);
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()) {
@@ -69,26 +71,27 @@ class Testimony extends AbstractController
                 $media->setAlt($data->getMedia()->getAlt());
                 $this->helper->em->persist($media);
 
-                // Then record Picto with previously created Media
-                $testimony->setText($data->getText());
-                $testimony->setSignature($data->getSignature());
-                $testimony->setMedia($media);
-                $this->helper->em->persist($testimony);
+                // Then record Historic with previously created Media
+                $historic->setText($data->getText());
+                $historic->setDate($data->getDate());
+                $historic->setTitle($data->getTitle());
+                $historic->setMedia($media);
+                $this->helper->em->persist($historic);
                 // Flush in database
                 $this->helper->em->flush();
 
                 // Redirect and add flashbag
                 $flashbagText = $editmode ? 'modifié' : 'enregistré';
-                $this->helper->addFlashBag("Le témoignage a bien été $flashbagText");
-                return $this->redirectToRoute('testimonials');
+                $this->helper->addFlashBag("L'historique a bien été $flashbagText");
+                return $this->redirectToRoute('historic');
             }
 
-            return $this->render('back/testimony/form.html.twig', [
-                'nav' => 'customers',
-                'title' => 'Ajout d\'un client',
-                'editMode' => $editmode ?? false,
+            return $this->render('back/historic/form.html.twig', [
+                'nav' => 'historic',
+                'title' => 'Ajout d\'un historique',
+                'editMode' => $editmode,
                 'media' => $media,
-                'testimony' => $testimony,
+                'historic' => $historic,
                 'form' => $form->createView(),
             ]);
 
@@ -96,17 +99,16 @@ class Testimony extends AbstractController
         return $this->redirectToRoute('login');
     }
 
-    #[Route('/admin/temoignage/delete', name: 'delete_testimonial')]
+    #[Route('/admin/historic/delete', name: 'delete_historic')]
     public function delete(Request $request): JsonResponse
     {
         if($request->request->all()['id'] && $this->helper->verifyConnection()) {
-            $testimonyId = (int)$request->request->all()['id'];
-            $testimony = $this->helper->em->getRepository(CryoTestimony::class)->find($testimonyId);
-            $this->helper->em->remove($testimony);
+            $historicId = (int)$request->request->all()['id'];
+            $historic = $this->helper->em->getRepository(CryoHistoric::class)->find($historicId);
+            $this->helper->em->remove($historic);
             $this->helper->em->flush();
             return new JsonResponse(['actionResponse'=>'success']);
         }
         return new JsonResponse(['actionResponse'=>'unauthorized']);
-
     }
 }

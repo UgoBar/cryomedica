@@ -29,6 +29,8 @@ class ElecController extends AbstractController
 
         if($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $elec = $this->helper->em->getRepository(CryoElec::class)->findAll()[0] ?? false;
 
             if (!$elec) {
@@ -53,7 +55,9 @@ class ElecController extends AbstractController
                 $this->helper->em->persist($elec);
                 // Flush in database
                 $this->helper->em->flush();
-                // Redirect to the banner's list
+                // Redirect and add flashbag
+                $flashbagText = $editmode ? 'modifié' : 'enregistré';
+                $this->helper->addFlashBag("le texte d'introduction a bien été $flashbagText");
                 return $this->redirectToRoute('elec');
             }
 
@@ -64,6 +68,7 @@ class ElecController extends AbstractController
                 'elec' => $elec,
                 'elecArray' => $elecArray ?? false,
                 'form' => $form->createView(),
+                'flashbag' => $flashbag,
             ]);
         }
         return $this->redirectToRoute('login');

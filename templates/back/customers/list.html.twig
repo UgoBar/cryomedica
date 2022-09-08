@@ -34,6 +34,9 @@
         </form>
     {% endif %}
 
+    {% if flashbag %}
+        <div class="notify bar-top do-show" data-notification-status="{{ flashbag['level'] }}">{{ flashbag['message'] }}</div>
+    {% endif %}
 
 {% endblock %}
 

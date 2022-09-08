@@ -39,6 +39,8 @@ class CryoMedia
         $this->cryoBios = new ArrayCollection();
         $this->cryoCustomers = new ArrayCollection();
         $this->cryoTestimonies = new ArrayCollection();
+        $this->cryoAzotes = new ArrayCollection();
+        $this->cryoHistorics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,6 +65,12 @@ class CryoMedia
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoTestimony::class)]
     private Collection $cryoTestimonies;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoAzote::class)]
+    private Collection $cryoAzotes;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CryoHistoric::class)]
+    private Collection $cryoHistorics;
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\File|null $imageFile
@@ -281,6 +289,66 @@ class CryoMedia
             // set the owning side to null (unless already changed)
             if ($cryoTestimony->getMedia() === $this) {
                 $cryoTestimony->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoAzote>
+     */
+    public function getCryoAzotes(): Collection
+    {
+        return $this->cryoAzotes;
+    }
+
+    public function addCryoAzote(CryoAzote $cryoAzote): self
+    {
+        if (!$this->cryoAzotes->contains($cryoAzote)) {
+            $this->cryoAzotes[] = $cryoAzote;
+            $cryoAzote->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoAzote(CryoAzote $cryoAzote): self
+    {
+        if ($this->cryoAzotes->removeElement($cryoAzote)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoAzote->getMedia() === $this) {
+                $cryoAzote->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CryoHistoric>
+     */
+    public function getCryoHistorics(): Collection
+    {
+        return $this->cryoHistorics;
+    }
+
+    public function addCryoHistoric(CryoHistoric $cryoHistoric): self
+    {
+        if (!$this->cryoHistorics->contains($cryoHistoric)) {
+            $this->cryoHistorics[] = $cryoHistoric;
+            $cryoHistoric->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCryoHistoric(CryoHistoric $cryoHistoric): self
+    {
+        if ($this->cryoHistorics->removeElement($cryoHistoric)) {
+            // set the owning side to null (unless already changed)
+            if ($cryoHistoric->getMedia() === $this) {
+                $cryoHistoric->setMedia(null);
             }
         }
 

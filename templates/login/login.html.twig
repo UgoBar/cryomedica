@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cryomedica - Connexion</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="{{ asset('css/back/login.css') }}" rel="stylesheet" />
+</head>
+
+<body>
+
+{# Modal #}
+<div id="modal-container">
+    <div class="modal">
+
+        <svg class="close-modal" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 50 50" overflow="visible" stroke="black" stroke-width="10" stroke-linecap="round">
+            <line x2="50" y2="50" />
+            <line x1="50" y2="50" />
+        </svg>
+
+        <h2>Réinitialisation du mot de passe</h2>
+        <p>Tu es sur le point de <b>réinitialiser ton mot de passe</b>.</p>
+        <p>Si c'est ce que tu veux faire dans ce cas :</p>
+        <br>
+
+        <p><span class="number">1</span> Renseigne ton mail de connexion habituel.</p>
+        <p><span class="number">2</span> Tu recevras un mail. Check bien dans toutes les boîtes.</p>
+        <p><span class="number">3</span> Ce mail te donnera accès à une page pour <b>modifier</b> ton mot de passe.</p>
+
+        <div class="floating-label" style="margin-top: 1.5em">
+            <input placeholder="Email" type="text" id="mailTo" name="mailTo" autocomplete="off" value="{{ mailTo }}">
+            <label for="mailTo">Email</label>
+        </div>
+
+        <div id="loaderDiv" style="display: none">
+            <div class="loader-6 center"><span></span></div>
+        </div>
+
+        <div id="modal-error" class="error" style="display: none"></div>
+
+        <button type="submit" name="updatePassword" onclick="updatePassword(document.querySelector('#mailTo').value)" style="margin-top: 1.5em">Reset</button>
+    </div>
+</div>
+
+<main>
+    <section class="session">
+        <div class="left" style="background-image: url('{{ asset('img/photo3.jpg') }}')"></div>
+        <form class="form" action="{{ path('login') }}" method="post" class="log-in" autocomplete="off">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <h4>Cryomedica</h4>
+            <p>Connexion au Back Office</p>
+
+            <div class="floating-label">
+                <input placeholder="Email" type="text" id="email" name="email" autocomplete="off" value="{{ email }}">
+                <label for="username">Email</label>
+            </div>
+            <div class="floating-label">
+                <input placeholder="Password" type="password" name="password" id="password" autocomplete="off">
+                <label for="password">Password</label>
+            </div>
+
+            {% if loginError %}
+                <div class="error">
+                    <p>Email ou mot de passe invalide</p>
+                </div>
+            {% endif %}
+
+            <div class="validation" style="display: none">
+                <p>Email envoyé !</p>
+            </div>
+
+            <span class="launch-modal">Mot de passe oublié ?</span>
+
+            <button type="submit" id="two" name="connexion">Log in</button>
+
+        </form>
+    </section>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    const modalError = $("#modal-error");
+    // Show Modal
+    $('.launch-modal').click( (event) => {
+        event.stopPropagation();
+        $('#modal-container').removeAttr('class').addClass('two');
+        $('body').addClass('modal-active');
+    })
+
+    // Click main ? Hide modal
+    $('main').click(function(){
+        hideModal();
+    });
+    // Click cross ? Hide modal
+    $('.close-modal').click( (e) => {
+        hideModal();
+    })
+
+    const hideModal = () => {
+        $('#modal-container').removeAttr('class');
+        $('body').removeClass('modal-active');
+    }
+    const updatePassword = (inputValue) => {
+        $.ajax({
+            url: "{{ path('send_mail_password') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "email": inputValue,
+            },
+            async: true,
+            beforeSend: () => {
+                $("#loaderDiv").show();
+            },
+            error: (data) => {
+                // show error message in modal
+                console.log('wrong', data.responseJSON.response);
+                modalError.show();
+                modalError.html("<p>Email introuvable ou invalide</p>")
+                $("#loaderDiv").hide();
+            },
+            success: (data) => {
+                // Hide modal and show success message
+                hideModal();
+                $('.validation').show();
+                modalError.hide();
+                $("#loaderDiv").hide();
+            }
+        })
+    }
+</script>
+
+</body>
+
+

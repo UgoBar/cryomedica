@@ -30,6 +30,8 @@ class BioController extends AbstractController
 
         if($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $bio = $this->helper->em->getRepository(CryoBio::class)
                 ->findAll()[0] ?? false;
 
@@ -59,10 +61,12 @@ class BioController extends AbstractController
                 $bio->setSecondText($data->getSecondText());
                 $bio->setIsActive($data->isIsActive());
                 $bio->setMedia($media);
+
                 $this->helper->em->persist($bio);
-                // Flush in database
                 $this->helper->em->flush();
-                // Redirect to the banner's list
+
+                // Redirect and add flashbag
+                $this->helper->addFlashBag('La modification a été enregistrée avec succès');
                 return $this->redirectToRoute('bio');
             }
 
@@ -72,6 +76,7 @@ class BioController extends AbstractController
                 'title' => $editmode ? 'Modification de la présentation' : 'Ajout de la présentation',
                 'media' => $media,
                 'picto' => $bio,
+                'flashbag' => $flashbag,
                 'form' => $form->createView(),
             ]);
         }

@@ -28,6 +28,8 @@ class PictoController extends AbstractController
     {
         if($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $homePictos = $this->helper->em->getRepository(CryoPicto::class)->findBy(
                 ['page' => 'home'],
                 ['position' => 'ASC']
@@ -45,6 +47,8 @@ class PictoController extends AbstractController
                 }
                 $this->helper->em->flush();
 
+                // Redirect and add flashbag
+                $this->helper->addFlashBag("L'ordre des pictos de la page d'accueil a bien été modifié");
                 return $this->redirectToRoute('pictos');
             }
 
@@ -55,6 +59,8 @@ class PictoController extends AbstractController
                 }
                 $this->helper->em->flush();
 
+                // Redirect and add flashbag
+                $this->helper->addFlashBag("L'ordre des pictos de la page des cabines électriques a bien été modifié");
                 return $this->redirectToRoute('pictos');
             }
 
@@ -63,6 +69,7 @@ class PictoController extends AbstractController
                 'title' => 'Liste des pictogrammes',
                 'homePictos' => $homePictos,
                 'elecPictos' => $elecPictos,
+                'flashbag' => $flashbag,
             ]);
 
         }
@@ -78,6 +85,7 @@ class PictoController extends AbstractController
             if(!$picto) {
                 $media = new CryoMedia();
                 $picto = new CryoPicto();
+                $editmode = false;
             } else {
                 $editmode = true;
                 $media = $picto->getMedia();
@@ -108,14 +116,16 @@ class PictoController extends AbstractController
                 // Flush in database
                 $this->helper->em->flush();
 
-                // Redirect to the banner's list
+                // Redirect and add flashbag
+                $flashbagText = $editmode ? 'modifié' : 'enregistré';
+                $this->helper->addFlashBag("Le picto a bien été $flashbagText");
                 return $this->redirectToRoute('pictos');
             }
 
             return $this->render('back/picto/form.html.twig', [
                 'nav' => 'pictos',
                 'title' => 'Ajout d\'un pictogramme',
-                'editMode' => $editmode ?? false,
+                'editMode' => $editmode,
                 'media' => $media,
                 'picto' => $picto,
                 'form' => $form->createView(),

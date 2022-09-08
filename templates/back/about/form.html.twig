@@ -1,0 +1,38 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
+    <div class="col-lg-6 col-12">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Premier paragraphe</h6>
+            {{ form_row(form.firstText, {
+                'attr': {'class':'form-group ps-3'},
+                'row_attr': {'class':'form-control mb-3'}
+            }) }}
+        </div>
+    </div>
+    <div class="col-lg-6 col-12" id="fileDrag">
+        <div class="card p-4 mb-4">
+            <h6 class="text-uppercase pink font-weight-bolder mb-0">Second paragraphe</h6>
+            {{ form_row(form.secondText, {
+                'attr': {'class':'form-group ps-3'},
+                'row_attr': {'class':'form-control mb-3'}
+            }) }}
+        </div>
+    </div>
+
+    {% if editMode %}
+        {{ form_widget(form.save, { 'label': 'Modifier', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary' }}) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+
+    {% if flashbag %}
+        <div class="notify bar-top do-show" data-notification-status="{{ flashbag['level'] }}">{{ flashbag['message'] }}</div>
+    {% endif %}
+
+{% endblock %}

@@ -26,6 +26,8 @@ class BannerController extends AbstractController
     {
         if($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $homeBanners = $this->helper->em->getRepository(CryoBanner::class)->findBy(
                 ['page' => 'home'],
                 ['position' => 'ASC']
@@ -50,6 +52,8 @@ class BannerController extends AbstractController
                 }
                 $this->helper->em->flush();
 
+                // Redirect and add flashbag
+                $this->helper->addFlashBag("L'ordre des bannières a bien été modifié");
                 return $this->redirectToRoute('banners');
             }
 
@@ -60,6 +64,7 @@ class BannerController extends AbstractController
                 'elecBanners' => $elecBanners,
                 'azoteBanners' => $azoteBanners,
                 'aboutBanners' => $aboutBanners,
+                'flashbag' => $flashbag,
             ]);
 
         }
@@ -89,6 +94,7 @@ class BannerController extends AbstractController
             if(!$banner) {
                 $media = new CryoMedia();
                 $banner = new CryoBanner();
+                $editmode = false;
             } else {
                 $editmode = true;
                 $media = $banner->getMedia();
@@ -117,7 +123,9 @@ class BannerController extends AbstractController
                 // Flush in database
                 $this->helper->em->flush();
 
-                // Redirect to the banner's list
+                // Redirect and add flashbag
+                $flashbagText = $editmode ? 'modifiée' : 'enregistrée';
+                $this->helper->addFlashBag("La bannière a bien été $flashbagText");
                 return $this->redirectToRoute('banners');
             }
 
@@ -127,7 +135,7 @@ class BannerController extends AbstractController
                 'form' => $form->createView(),
                 'media' => $media,
                 'banner' => $banner,
-                'editMode' => $editmode ?? false,
+                'editMode' => $editmode,
             ]);
 
         }

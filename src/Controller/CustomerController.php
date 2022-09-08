@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class Customer extends AbstractController
+class CustomerController extends AbstractController
 {
 
     private Helper $helper;
@@ -28,6 +28,8 @@ class Customer extends AbstractController
     {
         if($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $customers = $this->helper->em->getRepository(CryoCustomer::class)->findBy(
                     [],
                     ['position' => 'ASC']
@@ -40,6 +42,8 @@ class Customer extends AbstractController
                 }
                 $this->helper->em->flush();
 
+                // Redirect and add flashbag
+                $this->helper->addFlashBag("L'ordre des clients a bien été modifié");
                 return $this->redirectToRoute('back_customers');
             }
 
@@ -47,6 +51,7 @@ class Customer extends AbstractController
                 'nav' => 'customers',
                 'title' => 'Liste des clients',
                 'customers' => $customers,
+                'flashbag' => $flashbag,
             ]);
         }
         return $this->redirectToRoute('login');
@@ -61,6 +66,7 @@ class Customer extends AbstractController
             if(!$customer) {
                 $media = new CryoMedia();
                 $customer = new CryoCustomer();
+                $editmode = false;
             } else {
                 $editmode = true;
                 $media = $customer->getMedia();
@@ -88,14 +94,16 @@ class Customer extends AbstractController
                 // Flush in database
                 $this->helper->em->flush();
 
-                // Redirect to the banner's list
+                // Redirect and add flashbag
+                $flashbagText = $editmode ? 'modifié' : 'enregistré';
+                $this->helper->addFlashBag("Le centre a bien été $flashbagText");
                 return $this->redirectToRoute('back_customers');
             }
 
             return $this->render('back/customers/form.html.twig', [
                 'nav' => 'customers',
                 'title' => 'Ajout d\'un client',
-                'editMode' => $editmode ?? false,
+                'editMode' => $editmode,
                 'media' => $media,
                 'customer' => $customer,
                 'form' => $form->createView(),
@@ -116,6 +124,5 @@ class Customer extends AbstractController
             return new JsonResponse(['actionResponse'=>'success']);
         }
         return new JsonResponse(['actionResponse'=>'unauthorized']);
-
     }
 }

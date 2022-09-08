@@ -151,7 +151,7 @@ class FrontController extends AbstractController
                         $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
 
                         $headers  = 'MIME-Version: 1.0' . "\r\n";
-                        $headers .= 'From: Patrick Favre <contact@rameocean.fr>'."\r\n";
+                        $headers .= 'From: Cryomedica <contact@cryomedica.fr>'."\r\n";
                         $headers .= 'Reply-To: '.$email."\r\n";
                         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
                         $headers .= 'X-Mailer: PHP/' . phpversion();

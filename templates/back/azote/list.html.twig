@@ -1,0 +1,86 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" style="width: fit-content" href="{{ path('create_azote') }}">Ajouter une cabine</a>
+    </div>
+
+    {% if azote %}
+        <form action="" method="post">
+            <div class="row ms-0 no-gutter w-100 mb-4">
+                <h6 class="text-uppercase pink font-weight-bolder mb-2">Les cabines</h6>
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        {% for cabin in azote %}
+                            <div id="azote-{{ cabin.id }}" class="azote-cards row-even-reverse mb-4">
+                                <figure class="mb-0">
+                                    <img src="{{ asset('img/' ~ cabin.media.picture) }}" alt="{{ cabin.media.alt }}">
+                                </figure>
+                                <div class="azote-card-info ">
+                                    <h3>{{ cabin.title }}</h3>
+                                    <div class="mb-1">{{ cabin.text | raw }}</div>
+                                    <div class="card-footer-actions w-50">
+                                        <a class="btn btn-secondary no-radius me-2" href="{{ path('edit_azote', { 'id': cabin.id }) }}"><i class="material-icons" aria-hidden="true">edit</i></a>
+                                        <select name="azote-{{ cabin.id }}-position" id="azote-{{ cabin.id }}" class="custom-select me-2">
+                                            {% for i in 1..azote|length %}
+                                                <option value="{{ i }}" {{ cabin.position == i ? 'selected' : '' }}>{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="btn btn-danger no-radius " onclick="launchDeleteModal({{ cabin.id }}, '{{ cabin.title }}')"><i class="material-icons" aria-hidden="true">delete</i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" name="order" class="btn btn-secondary">Changer l'ordre</button>
+        </form>
+    {% endif %}
+
+    {% if flashbag %}
+        <div class="notify bar-top do-show" data-notification-status="{{ flashbag['level'] }}">{{ flashbag['message'] }}</div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer la cabine <b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_azote') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'La cabine ' + name + ' a bien été supprimée',
+                                'success'
+                            );
+                            $('#azote-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -27,6 +27,8 @@ class CentersController extends AbstractController
     {
         if ($this->helper->verifyConnection()) {
 
+            $flashbag = $this->helper->getFlashBag() ?? false;
+
             $centers = $this->helper->em->getRepository(CryoCenters::class)->findBy(
                 [],
                 ['is_open' => 'DESC']
@@ -36,6 +38,7 @@ class CentersController extends AbstractController
                 'nav' => 'centers',
                 'title' => 'Liste des centres',
                 'centers' => $centers,
+                'flashbag' => $flashbag,
             ]);
         }
 
@@ -73,7 +76,9 @@ class CentersController extends AbstractController
                 $this->helper->em->persist($center);
                 $this->helper->em->flush();
 
-                // Redirect to the banner's list
+                // Redirect and add flashbag
+                $flashbagText = $editmode ? 'modifié' : 'enregistré';
+                $this->helper->addFlashBag("Le centre a bien été $flashbagText");
                 return $this->redirectToRoute('back_centers');
             }
 
