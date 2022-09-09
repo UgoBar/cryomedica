@@ -21,7 +21,7 @@ class HistoricController extends AbstractController
         $this->helper = $helper;
     }
 
-    #[Route('/admin/historic', name: 'historic')]
+    #[Route('/admin/historic', name: 'back_historic')]
     public function list(Request $request): Response
     {
         if($this->helper->verifyConnection()) {

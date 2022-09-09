@@ -118,9 +118,8 @@
             },
             error: (data) => {
                 // show error message in modal
-                console.log('wrong', data.responseJSON.response);
                 modalError.show();
-                modalError.html("<p>Email introuvable ou invalide</p>")
+                modalError.html(`<p>${data.responseJSON.response}</p>`)
                 $("#loaderDiv").hide();
             },
             success: (data) => {
@@ -129,6 +128,7 @@
                 $('.validation').show();
                 modalError.hide();
                 $("#loaderDiv").hide();
+                localStorage.setItem('token', data.token);
             }
         })
     }

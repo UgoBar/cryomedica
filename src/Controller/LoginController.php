@@ -89,7 +89,8 @@ class LoginController extends AbstractController
                 // send mail
                 $subject = "Reinitialisation du mot de passe";
                 $msg = '<html><body>';
-                $msg .= "Pour réinitialiser ton mot de passe cliques sur ce lien : https://www.cryomedica.fr/admin/update/password?token=$token";
+                $msg .= "Pour réinitialiser ton mot de passe cliques sur ce lien : https://www.cryomedica.fr/admin/update-password/form?token=$token";
+                $msg .= "<br>Il faut absolument faire la démarche avec le même navigateur que celui avec lequel tu as fais la demande de réinitialisation de mot de passe.";
                 $msg .= '</body></html>';
                 $msg = wordwrap($msg,70);
 
@@ -101,7 +102,7 @@ class LoginController extends AbstractController
 //                mail($mailTo, $subject, $msg, $headers);
                 $this->helper->session->set('token', $token);
                 $this->helper->session->set('userMail', $mailTo);
-                return new JsonResponse(['response'=>'success']);
+                return new JsonResponse(['token'=> $token]);
             }
         }
         return new JsonResponse(['response'=>'Aucun email envoyé'], 401);
@@ -128,6 +129,7 @@ class LoginController extends AbstractController
         $password = $request->request->all()['password'];
         $confirmPassword = $request->request->all()['confirmPassword'];
         $token = $request->request->all()['token'];
+        $storageToken = $request->request->all()['storageToken'];
 
         if($email && $password && $confirmPassword && $token) {
 
@@ -147,21 +149,20 @@ class LoginController extends AbstractController
                 return new JsonResponse(['error' => 'Les deux mots de passe ne sont pas les mêmes'], 404);
             }
 
-            // Token in session ?
-            if(!$sessionToken = $this->helper->session->get('token')) {
+            if(!$storageToken ) {
                 return new JsonResponse(['error' => 'Le lien a expiré, il faut refaire une demande de réinitialisation depuis le login et cliquer sur le <b>dernier</b> mail'], 404);
             }
 
             // Tokens similar ?
-            if($token !== $sessionToken) {
+            if($token !== $storageToken) {
                 return new JsonResponse(['error' => 'Mauvais lien, il faut refaire une demande de réinitialisation depuis le login et cliquer sur le <b>dernier</b> mail'], 404);
             }
 
             // Hash and Update password and send success response
-//            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-//            $requestedUser->setPassword($passwordHash);
-//            $this->em->persist($requestedUser);
-//            $this->em->flush();
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $requestedUser->setPassword($passwordHash);
+            $this->em->persist($requestedUser);
+            $this->em->flush();
             return new JsonResponse(['response'=>'success']);
 
         } else {
