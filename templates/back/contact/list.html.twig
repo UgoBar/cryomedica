@@ -14,8 +14,11 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white ps-3">Liste des contacts</h6>
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3" style="display: flex; align-items: baseline; justify-content: space-between">
+                        <h6 class="text-white ps-3 mb-0">Liste des contacts</h6>
+                        {% if contacts %}
+                            <a class="btn btn-white mb-0 d-none d-md-block me-4" href="{{ path('export_contact') }}" target="_blank"><i class="material-icons">browser_updated</i>Télécharger la liste</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
@@ -96,6 +99,7 @@
     {{ parent() }}
 
     <script>
+
         const launchDeleteModal = (id, name) => {
             Swal.fire({
                 title: 'Attention',

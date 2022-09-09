@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\CryoCenters;
 use App\Entity\CryoContact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,18 @@ class CryoContactRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getContactAsArray(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select([
+                'c.firstname', 'c.lastname', 'c.email', 'c.phone', 'c.commitment', 'c.company', 'c.sessions',
+                'center.name', 'center.city', 'center.is_open'])
+            ->leftJoin(CryoCenters::class, 'center', 'WITH', 'c.center = center.id')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
     }
 
 //    /**
