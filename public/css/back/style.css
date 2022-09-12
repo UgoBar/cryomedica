@@ -100,6 +100,30 @@ div.container-fluid nav {
     width: 100%;
 }
 
+.sider-btn {
+    background-color: white;
+    border-color: white;
+    width: 30px;
+    color: var(--pink);
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    transition: all .3s ease-in-out;
+}
+.sider-btn .material-icons {
+    vertical-align: middle;
+}
+.sider-btn:hover {
+    color: var(--dark);
+    box-shadow: 0 10px 10px rgba(255,255,255,.1);;
+}
+
+.form-error {
+    color: var(--bs-danger);
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .dashboard-card {
     margin: 10px;
 }

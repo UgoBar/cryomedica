@@ -1,0 +1,97 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <div class="row ms-0 w-100">
+        <a class="btn bg-gradient-primary mb-4" style="width: fit-content" href="{{ path('create_user') }}">Ajouter un utilisateur</a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3" style="display: flex; align-items: baseline; justify-content: space-between">
+                        <h6 class="text-white ps-3 mb-0">Liste des utilisateurs</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr id="user-{{ user.id }}">
+                                    <td>
+                                        <h6 class="mb-0 text-sm ps-3">{{ user.firstname }} {{ user.lastname }}</h6>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ user.email }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 text-xs font-weight-bold">{{ user.role }}</p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a onclick="launchDeleteModal({{ user.id }}, '{{ user.firstname }} {{ user.lastname }}')" class="delete-button"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if flashbag %}
+        <div class="notify bar-top do-show" data-notification-status="{{ flashbag['level'] }}">{{ flashbag['message'] }}</div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        const launchDeleteModal = (id, name) => {
+            Swal.fire({
+                title: 'Attention',
+                html: "Attention, supprimer l'utilisateur <br><b>" + name + " </b><br> est irréversible.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#929292',
+                confirmButtonText: 'Supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ path('delete_user') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        async: true,
+                        success: (data) => {
+                            Swal.fire(
+                                'Deleted!',
+                                'L\'utilistateur ' + name + ' a bien été supprimé',
+                                'success'
+                            );
+                            $('#user-' + id).remove();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

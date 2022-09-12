@@ -1,0 +1,76 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+
+    <a href="{{ path('users') }}" class="btn btn-secondary mb-4"><i class="material-icons text-white pe-2">keyboard_backspace</i>Retour à la liste</a>
+
+    {{ form_start(form, {'attr': {'class': 'flex-form'}}) }}
+
+        <div class="col-lg-6 col-12">
+            <div class="card p-4 mb-4">
+                <h6 class="text-uppercase pink font-weight-bolder mb-3">Infos Générales</h6>
+                {{ form_row(form.firstname, {
+                    'attr': { 'class':'form-control mb-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'}
+                }) }}
+                {{ form_row(form.lastname, {
+                    'attr': { 'class':'form-control mb-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'}
+                }) }}
+                <small class="mb-1">Choix du rôle de l'utilisateur</small>
+                {{ form_row(form.role, {
+                    'attr': {'class':'form-select ps-3'},
+                    'label_attr': {'class':'form-label required'},
+                    'row_attr': {'class':'mb-3'}
+                }) }}
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12" id="fileDrag">
+            <div class="card p-4 mb-4">
+                <h6 class="text-uppercase pink font-weight-bolder mb-0">Identifiants</h6>
+                <small class="mb-3">Identifiants de connexion au back office</small>
+                {{ form_row(form.email, {
+                    'attr': { 'class':'form-control mb-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'}
+                }) }}
+                {{ form_row(form.password, {
+                    'attr': { 'class':'form-control mb-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'},
+                }) }}
+                {{ form_row(form.confirmPassword, {
+                    'attr': { 'class':'form-control mb-3', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
+                    'label_attr':{'class':'form-label'},
+                    'row_attr': {'class':'input-group input-group-outline'}
+                }) }}
+
+                {% if error %}
+                    <p class="form-error mb-0">{{ error }}</p>
+                {% endif %}
+
+            </div>
+        </div>
+
+        {{ form_widget(form.save, { 'label': 'Ajouter', 'attr': { 'class': 'btn btn-primary' }}) }}
+
+    {{ form_end(form) }}
+{#    </div>#}
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        const inputsText = document.querySelectorAll('input[type=text]') ?? false;
+
+        inputsText.forEach( (input) => {
+            input.value = '';
+        })
+
+    </script>
+
+{% endblock %}

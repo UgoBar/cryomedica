@@ -25,6 +25,8 @@ class CryoUser
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    private ?string $confirmPassword = null;
+
     #[ORM\Column(length: 50)]
     private ?string $role = null;
 
@@ -77,6 +79,18 @@ class CryoUser
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getconfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setconfirmPassword(string $password): self
+    {
+        $this->confirmPassword = $password;
 
         return $this;
     }
