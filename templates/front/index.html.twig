@@ -20,19 +20,19 @@
                 <div class="cards__wrapper">
                     <div class="card current--card">
                         <div class="card__image">
-                            <img src="{{ asset('img/photo2.jpg') }}" alt="" />
+                            <img src="{{ asset('img/' ~ banner1.media.picture) }}" alt="{{ banner1.media.alt }}" />
                         </div>
                     </div>
 
                     <div class="card next--card">
                         <div class="card__image">
-                            <img src="{{ asset('img/cryomedica-bien-etre.jpg') }}" alt="" />
+                            <img src="{{ asset('img/' ~ banner2.media.picture) }}" alt="{{ banner2.media.alt }}" />
                         </div>
                     </div>
 
                     <div class="card previous--card">
                         <div class="card__image">
-                            <img src="{{ asset('img/cryomedica-sport.jpg') }}" alt="" />
+                            <img src="{{ asset('img/' ~ banner3.media.picture) }}" alt="{{ banner3.media.alt }}" />
                         </div>
                     </div>
                 </div>
@@ -47,31 +47,31 @@
             <div class="infoList">
                 <div class="info__wrapper">
                     <div class="info current--info">
-                        <h1 class="text name">Santé</h1>
-                        <p class="text description">Quand le froid soulage la douleur</p>
+                        <h1 class="text name">{{ banner1.title }}</h1>
+                        <p class="text description">{{ banner1.subtitle | raw }}</p>
                     </div>
 
                     <div class="info next--info">
-                        <h1 class="text name">Bien être</h1>
-                        <p class="text description">Des effets anti-inflammatoires, <br>antidouleurs, myorelaxants</p>
+                        <h1 class="text name">{{ banner2.title }}</h1>
+                        <p class="text description">{{ banner2.subtitle | raw }}</p>
                     </div>
 
                     <div class="info previous--info">
-                        <h1 class="text name">Sport</h1>
-                        <p class="text description">Réduit les douleurs musculaires</p>
+                        <h1 class="text name">{{ banner3.title }}</h1>
+                        <p class="text description">{{ banner3.subtitle | raw }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="app__bg">
                 <div class="app__bg__image current--image">
-                    <img src="{{ asset('img/photo2.jpg') }}" alt="" />
+                    <img src="{{ asset('img/' ~ banner1.media.picture) }}" alt="{{ banner1.media.alt }}" />
                 </div>
                 <div class="app__bg__image next--image">
-                    <img src="{{ asset('img/cryomedica-bien-etre.jpg') }}" alt="" />
+                    <img src="{{ asset('img/' ~ banner2.media.picture) }}" alt="{{ banner2.media.alt }}" />
                 </div>
                 <div class="app__bg__image previous--image">
-                    <img src="{{ asset('img/cryomedica-sport.jpg') }}" alt="" />
+                    <img src="{{ asset('img/' ~ banner3.media.picture) }}" alt="{{ banner3.media.alt }}" />
                 </div>
             </div>
 
@@ -103,45 +103,18 @@
 
     <section id="cryomedica">
             <div class="pictos">
-                <div class="cryo-card">
+                {% for picto in pictos %}
+                <div class="cryo-card" style="background-color: {{ picto.bgColor }}; color: {{ picto.color }}">
                     <div class="inner-card">
-                        <i class="icon-cabine-cryo"></i>
-                        <p>100 cabines installées depuis 2009</p>
+                        <img src="{{ asset('img/' ~ picto.media.picture) }}" alt="{{ picto.media.alt }}">
+                        <p>{{ picto.title }}</p>
                     </div>
                 </div>
-                <div class="cryo-card">
-                    <div class="inner-card">
-                        <i class="icon-azote"></i>
-                        <p>Cabines à l’azote</p>
-                    </div>
-                </div>
-                <div class="cryo-card">
-                    <div class="inner-card">
-                        <i class="icon-europe"></i>
-                        <p>Implanté en France, Belgique, Suisse</p>
-                    </div>
-                </div>
-                <div class="cryo-card">
-                    <div class="inner-card">
-                        <i class="icon-france"></i>
-                        <p>Cabines électriques, technologie française</p>
-                    </div>
-                </div>
-                <div class="cryo-card">
-                    <div class="inner-card">
-                        <i class="icon-cold"></i>
-                        <p>Une température jamais atteinte</p>
-                    </div>
-                </div>
-                <div class="cryo-card">
-                    <div class="inner-card">
-                        <i class="icon-small"></i>
-                        <p>Un emplacement très réduit</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
     </section>
 
+    {% if bio and bio.isActive %}
     <section id="centers">
         <div class="container">
             <section>
@@ -151,21 +124,15 @@
 
                 <article>
                     <div class="img-part-article">
-                        <img src="{{ asset("img/cabine-cryo-landscape.jpg") }}" alt="Image d'une cabine cryo">
+                        <img src="{{ asset('img/' ~ bio.media.picture) }}" alt="{{ bio.media.alt }}">
                     </div>
                     <div class="text-part-article">
-                        <p>Les centres participant à cette opération seront constitués d’une cabine électrique, d’une cabine à l’azote et d’appareils supplémentaires de récupération.</p>
-                        <p>Les séances pratiquées seront accessibles financièrement grâce à une technologie plus économique.</p>
-                        <p>Les séances seront effectuées sous la responsabilité d’un professionnel de santé.</p>
-                        <p>Le savoir-faire est basé sur l’expérience de plus de 12 ans de la pratique de la CCE.</p>
-                        <p>Les acteurs principaux de ces centres sont des acteurs connus de la CCE.</p>
+                        {{ bio.firstText | raw }}
                     </div>
                 </article>
 
                 <article>
-                    <p>La commercialisation et l’installation technique des centres. CRYOMEDICA achète sa première cabine à l’azote en 2009.</p>
-                    <p>Le Consultant thérapeutique est le 1er kinésithérapeute avec une cabine à l’azote en France, spécialiste de la récupération sportive et médicale, qui utilise lui-même plusieurs cabines de cryothérapie. CRYOMEDICA a choisi de travailler avec un consultant indépendant pour la partie thérapeutique de cette activité.</p>
-                    <p>La Fabrication avec un bureau d’études, une technologie nouvelle et française, un brevet déposé pour des températures jamais atteintes dans une cabine de cryothérapie. CRYOMEDICA a longtemps travaillé pour le développement de cette nouvelle cabine et va maintenant la développer.</p>
+                    {{ bio.secondText | raw }}
                 </article>
 
                 <a class="btn btn-outline-pink" href="{{ path('centers') }}">Découvrir les centres</a>
@@ -173,6 +140,7 @@
             </section>
         </div>
     </section>
+    {% endif %}
 
 {% endblock %}
 

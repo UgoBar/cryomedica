@@ -25,121 +25,69 @@
     <section class="cabin-infos">
 
         <div class="elec-wrapper active">
-            <div class="cabin-banner" style="background-image: url('{{ asset('img/elec-banner.jpg') }}')"></div>
+            <div class="cabin-banner" style="background-image: url('{{ asset('img/' ~ elecBanner.media.picture) }}')"></div>
             <div class="container">
                 <section class="cabin-card-description">
                     <h2 class="text-center text-uppercase">Cabines électriques</h2>
-                    <p class="text-center">Des cabines électriques qui démarrent une nouvelle page de la CCE</p>
+                    {% if elec %}
+                        <div>{{ elec.text | raw }}</div>
+                    {% endif %}
+                    {% if elecArray %}
                     <section class="carac">
                         <span class="badge">Caractéristiques</span>
                         <table class="table table-striped">
                             <tbody>
-                            <tr>
-                                <td>Alimentation électrique</td>
-                                <td>220 V ~ 50 Hz - 16A</td>
-                            </tr>
-                            <tr>
-                                <td>Consommation électrique</td>
-                                <td>Refroidissement : 0,3KW - Séchage : 1,3 KW - Veille : 0,1 KW</td>
-                            </tr>
-                            <tr>
-                                <td>Matières structure et carénages</td>
-                                <td>Inox et aluminium</td>
-                            </tr>
-                            <tr>
-                                <td>Isolation</td>
-                                <td>Super Isolant λ = 0,015 W/m.k</td>
-                            </tr>
-                            <tr>
-                                <td>Dimensions L x l x H</td>
-                                <td>1564 x 1032 x 2130 mm</td>
-                            </tr>
-                            <tr>
-                                <td>Poids maximum supporté</td>
-                                <td>150 kg - test d’usure : 500 heures poids 200kg 4M/seconde RAS</td>
-                            </tr>
-                            <tr>
-                                <td>Température dans la cabine</td>
-                                <td>De -120°C à -140°C - sonde de température située dans le bain</td>
-                            </tr>
-                            <tr>
-                                <td>Consommation d’azote liquide</td>
-                                <td>Mise à froid : &lt;4 litres – Séance : &lt;3 litres</td> </tr> <tr>
-                                <td>Temps de séchage</td>
-                                <td>15 minutes</td>
-                            </tr>
+                            {% for carac in elecArray %}
+                                <tr>
+                                    <td>{{ carac.title }}</td>
+                                    <td>{{ carac.description }}</td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </section>
+                    {% endif %}
+                    {% if pictos %}
                     <section class="atout">
                         <span class="badge">Des atouts</span>
                         <div class="pictos">
-                            <div class="cryo-card">
-                                <div class="inner-card">
-                                    <i class="icon-small"></i>
-                                    <p>Dimension réduite</p>
+                            {% for picto in pictos %}
+                                <div class="cryo-card" style="background-color: {{ picto.bgColor }}; color: {{ picto.color }}">
+                                    <div class="inner-card">
+                                        <img src="{{ asset('img/' ~ picto.media.picture) }}" alt="{{ picto.media.alt }}">
+                                        <p>{{ picto.title }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="cryo-card">
-                                <div class="inner-card">
-                                    <i class="icon-sixtie"></i>
-                                    <p>Température statique réglable à partir de -60°C</p>
-                                </div>
-                            </div>
-                            <div class="cryo-card">
-                                <div class="inner-card">
-                                    <i class="icon-maintenance"></i>
-                                    <p>Maintenance réduite</p>
-                                </div>
-                            </div>
-                            <div class="cryo-card">
-                                <div class="inner-card">
-                                    <i class="icon-cold"></i>
-                                    <p>Jusqu'à -150°(unique sur le marché)</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </section>
+                    {% endif %}
                 </section>
             </div>
         </div>
 
+        {% if azoteCabins %}
         <div class="azote-wrapper">
-            <div class="cabin-banner" style="background-image: url('{{ asset('img/cryomedica-panneau-cabine.jpg') }}')"></div>
+            <div class="cabin-banner" style="background-image: url('{{ asset('img/' ~ azoteBanner.media.picture) }}')"></div>
             <div class="container">
                 <div class="cabin-card-description">
                     <h2 class="text-center text-uppercase">Cabines à l'azote</h2>
                     <p class="text-center">Des cabines à l’azote de différents types, pour différents besoins</p>
+                    {% for cabin in azoteCabins %}
                     <div class="azote-cards">
                         <figure>
-                            <img src="{{ asset('img/cabine-cryo-landscape.jpg') }}" alt="">
+                            <img src="{{ asset('img/' ~ cabin.media.picture) }}" alt="{{ cabin.media.alt }}" />
                         </figure>
                         <div class="azote-card-info">
-                            <h3>Cryosense</h3>
-                            <p class="text-center">La cabine haut de gamme dernière technologie</p>
+                            <h3>{{ cabin.title }}</h3>
+                            <div>{{ cabin.text | raw }}</div>
                         </div>
                     </div>
-                    <div class="azote-cards">
-                        <figure>
-                            <img src="{{ asset('img/cryomedica-EVOLUTION-1-top.JPG') }}" alt="">
-                        </figure>
-                        <div class="azote-card-info">
-                            <h3>Evolution 1</h3>
-                            <p class="text-center">Le modèle accessible et performant</p>
-                        </div>
-                    </div>
-                    <div class="azote-cards">
-                        <figure>
-                            <img src="{{ asset('img/photo1.jpg') }}" alt="">
-                        </figure>
-                        <div class="azote-card-info">
-                            <h3>Evolution 2</h3>
-                            <p class="text-center">La cabine deuxième génération</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+        {% endif %}
 
     </section>
 

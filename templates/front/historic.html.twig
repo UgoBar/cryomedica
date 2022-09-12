@@ -16,39 +16,44 @@
         <div class="timeline-header">
             <h1 class="text-center text-uppercase bodoni">Historique</h1>
         </div>
+        {% if historics %}
         <div class="timeline">
             <!-- @credit: https://codepen.io/knyttneve/pen/bgvmma -->
-            <div class="timeline-item" data-text="1er centre au Japon">
-                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo-1-1.jpg') }}"/>
-                    <h2 class="timeline__content-title">1978</h2>
-                    <p class="timeline__content-desc">C'est pendant l'année 1978 que la première cabine de cryothérapie voit le jour, au Japon. C'est une révolution à l'époque et cela mis un moment avant de gagner le coeur des gens</p>
+            {% for story in historics %}
+            <div class="timeline-item" data-text="{{ story.title }}">
+                <div class="timeline__content">
+                    <img src="{{ asset('img/' ~ story.media.picture) }}" alt="{{ story.media.alt }}">
+                    <h2 class="timeline__content-title">{{ story.date }}</h2>
+                    <div class="timeline__content-desc">{{ story.text | raw }}</div>
                 </div>
             </div>
-            <div class="timeline-item" data-text="Cabine électrique">
-                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo2.jpg') }}"/>
-                    <h2 class="timeline__content-title">1982</h2>
-                    <p class="timeline__content-desc">Quelques années plus tard la première cabine électrique allemande arrive sur le marché.</p>
-                </div>
-            </div>
-            <div class="timeline-item" data-text="Cryomedica">
-                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo3.jpg') }}"/>
-                    <h2 class="timeline__content-title">2009</h2>
-                    <p class="timeline__content-desc">1er achat de cabine azote pour CRYOMEDICA</p>
-                </div>
-            </div>
-            <div class="timeline-item" data-text="Commencement">
-                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/cabine-cryo-landscape.jpg') }}"/>
-                    <h2 class="timeline__content-title">2010</h2>
-                    <p class="timeline__content-desc">Il existe 4 centres de CCE en France. 2 centres ouverts par CRYOMEDICA, une chambre électrique à l’INSEP et une autre cabine à l’azote à LA SEYNE SUR MER</p>
-                </div>
-            </div>
-            <div class="timeline-item" data-text="Démocratisation">
-                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo1.jpg') }}"/>
-                    <h2 class="timeline__content-title">2022</h2>
-                    <p class="timeline__content-desc">Processus d'ouverture de 18 centres CRYOMEDICA dans le but de démocratiser la pratique de la CCE en la rendant plus accessible</p>
-                </div>
-            </div>
+            {% endfor %}
+{#            <div class="timeline-item" data-text="Cabine électrique">#}
+{#                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo2.jpg') }}"/>#}
+{#                    <h2 class="timeline__content-title">1982</h2>#}
+{#                    <p class="timeline__content-desc">Quelques années plus tard la première cabine électrique allemande arrive sur le marché.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="timeline-item" data-text="Cryomedica">#}
+{#                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo3.jpg') }}"/>#}
+{#                    <h2 class="timeline__content-title">2009</h2>#}
+{#                    <p class="timeline__content-desc">1er achat de cabine azote pour CRYOMEDICA</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="timeline-item" data-text="Commencement">#}
+{#                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/cabine-cryo-landscape.jpg') }}"/>#}
+{#                    <h2 class="timeline__content-title">2010</h2>#}
+{#                    <p class="timeline__content-desc">Il existe 4 centres de CCE en France. 2 centres ouverts par CRYOMEDICA, une chambre électrique à l’INSEP et une autre cabine à l’azote à LA SEYNE SUR MER</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="timeline-item" data-text="Démocratisation">#}
+{#                <div class="timeline__content"><img class="timeline__img" src="{{ asset('img/photo1.jpg') }}"/>#}
+{#                    <h2 class="timeline__content-title">2022</h2>#}
+{#                    <p class="timeline__content-desc">Processus d'ouverture de 18 centres CRYOMEDICA dans le but de démocratiser la pratique de la CCE en la rendant plus accessible</p>#}
+{#                </div>#}
+{#            </div>#}
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

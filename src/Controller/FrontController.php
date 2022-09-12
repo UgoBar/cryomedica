@@ -2,8 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\CryoAbout;
+use App\Entity\CryoAzote;
+use App\Entity\CryoBanner;
+use App\Entity\CryoBio;
 use App\Entity\CryoCenters;
 use App\Entity\CryoContact;
+use App\Entity\CryoCustomer;
+use App\Entity\CryoElec;
+use App\Entity\CryoElecArray;
+use App\Entity\CryoHistoric;
+use App\Entity\CryoPicto;
+use App\Entity\CryoTestimony;
 use App\Repository\CryoCentersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,8 +33,24 @@ class FrontController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
+        $banner1 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 1])[0];
+        $banner2 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 2])[0];
+        $banner3 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 3])[0];
+
+        $homePictos = $this->em->getRepository(CryoPicto::class)->findBy(
+            ['page' => 'home'],
+            ['position' => 'ASC']
+        ) ?? false;
+
+        $bio = $this->em->getRepository(CryoBio::class)->findAll()[0] ?? false;
+
         return $this->render('front/index.html.twig', [
             'title' => 'Accueil',
+            'banner1' => $banner1,
+            'banner2' => $banner2,
+            'banner3' => $banner3,
+            'pictos' => $homePictos,
+            'bio' => $bio
         ]);
     }
 
@@ -189,32 +215,76 @@ class FrontController extends AbstractController
     #[Route('/clients', name: 'customers')]
     public function customers(): Response
     {
+        $customers = $this->em->getRepository(CryoCustomer::class)->findBy(
+            [],
+            ['position' => 'ASC']
+        ) ?? false;
+
+        $testimonials = $this->em->getRepository(CryoTestimony::class)->findAll() ?? false;
+
         return $this->render('front/customers.html.twig', [
             'title' => 'Clients',
+            'customers' => $customers,
+            'testimonials' => $testimonials
         ]);
     }
 
     #[Route('/historique', name: 'historic')]
     public function historic(): Response
     {
+        $historics = $this->em->getRepository(CryoHistoric::class)->findBy(
+            [],
+            ['date' => 'ASC']
+        ) ?? false;
+
         return $this->render('front/historic.html.twig', [
             'title' => 'Historique',
+            'historics' => $historics
         ]);
     }
 
     #[Route('/cabines', name: 'cabins')]
     public function cabins(): Response
     {
+        // BANNERS
+        $elecBanner = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'elec'], ['id' => 'DESC'])[0];
+        $azoteBanner = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'azote'], ['id' => 'DESC'])[0];
+
+        // TEXT
+        $elec = $this->em->getRepository(CryoElec::class)->findAll()[0] ?? false;
+
+        // ARRAY
+        if($elec) {
+            $elecArray = $this->em->getRepository(CryoElecArray::class)->findBy(['cryoElec' => $elec]);
+        }
+
+        // PICTOS
+        $elecPictos = $this->em->getRepository(CryoPicto::class)->findBy(['page' => 'elec'], ['position' => 'ASC']) ?? false;
+
+        // AZOTE CABINS
+        $azote = $this->em->getRepository(CryoAzote::class)->findBy([], ['position' => 'ASC']) ?? false;
+
         return $this->render('front/cabins.html.twig', [
             'title' => 'Cabines',
+            'elecBanner' => $elecBanner,
+            'azoteBanner' => $azoteBanner,
+            'elec' => $elec,
+            'elecArray' => $elecArray ?? false,
+            'pictos' => $elecPictos,
+            'azoteCabins' => $azote
         ]);
     }
 
     #[Route('/about', name: 'about')]
     public function about(): Response
     {
+        $about = $this->em->getRepository(CryoAbout::class)->findAll()[0] ?? false;
+        $aboutBanner = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'about'], ['id' => 'DESC'])[0] ?? false;
+
         return $this->render('front/about.html.twig', [
             'title' => 'A propos',
+            'about' => $about,
+            'aboutBanner' => $aboutBanner
         ]);
     }
 }

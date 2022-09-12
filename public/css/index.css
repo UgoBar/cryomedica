@@ -24,6 +24,10 @@
     transform: translate(-50%, -50%);
     width: 80%;
 }
+.cryo-card .inner-card img {
+    width: 120px;
+    height: 120px;
+}
 .cryo-card:nth-of-type(odd) {
     color: #272727;
     background-color: white;
@@ -157,13 +161,17 @@ article p {
     }
 
     .cryo-card:nth-of-type(1), .cryo-card:nth-of-type(4), .cryo-card:nth-of-type(5) {
-        color: #272727;
-        background-color: white;
+        color: #272727 !important;
+        background-color: white !important;
+    }
+    .cryo-card:nth-of-type(3) img, .cryo-card:nth-of-type(4) img {
+        -webkit-filter: invert(100%); /* Safari/Chrome */
+        filter: invert(100%);
     }
 
     .cryo-card:nth-of-type(2), .cryo-card:nth-of-type(3), .cryo-card:nth-of-type(6) {
-        color: white;
-        background-color: var(--pink);
+        color: white !important;
+        background-color: var(--pink) !important;
     }
 
     #centers section h1 {
