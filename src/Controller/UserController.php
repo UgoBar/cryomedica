@@ -5,8 +5,8 @@ namespace App\Controller;
 
 
 use App\Entity\CryoUser;
-use App\Form\CryoUserPasswordType;
-use App\Form\CryoUserType;
+use App\Form\Users\CryoUserPasswordType;
+use App\Form\Users\CryoUserType;
 use App\Helper\Helper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
