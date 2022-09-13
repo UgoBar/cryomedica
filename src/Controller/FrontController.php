@@ -30,6 +30,20 @@ class FrontController extends AbstractController
         $this->em = $doctrine->getManager();
     }
 
+    #[Route('/templates/menu_photo', name: 'menu_photo')]
+    public function menuPhoto(): Response
+    {
+        $banner1 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 1])[0];
+        $banner2 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 2])[0];
+        $banner3 = $this->em->getRepository(CryoBanner::class)->findBy(['page' => 'home', 'position' => 3])[0];
+
+        return $this->render('front/menu_photo.html.twig', [
+            'banner1' => $banner1,
+            'banner2' => $banner2,
+            'banner3' => $banner3,
+        ]);
+    }
+
     #[Route('/', name: 'index')]
     public function index(): Response
     {
