@@ -83,7 +83,7 @@ class HistoricController extends AbstractController
                 // Redirect and add flashbag
                 $flashbagText = $editmode ? 'modifié' : 'enregistré';
                 $this->helper->addFlashBag("L'historique a bien été $flashbagText");
-                return $this->redirectToRoute('historic');
+                return $this->redirectToRoute('back_historic');
             }
 
             return $this->render('back/historic/form.html.twig', [
