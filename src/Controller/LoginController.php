@@ -99,7 +99,7 @@ class LoginController extends AbstractController
                 $headers .= 'From: Cryomedica <contact@cryomedica.fr>'."\r\n";
                 $headers .= 'X-Mailer: PHP/' . phpversion();
 
-//                mail($mailTo, $subject, $msg, $headers);
+                mail($mailTo, $subject, $msg, $headers);
                 $this->helper->session->set('token', $token);
                 $this->helper->session->set('userMail', $mailTo);
                 return new JsonResponse(['token'=> $token]);
@@ -128,10 +128,10 @@ class LoginController extends AbstractController
         $email = $request->request->all()['email'];
         $password = $request->request->all()['password'];
         $confirmPassword = $request->request->all()['confirmPassword'];
-        $token = $request->request->all()['token'];
-        $storageToken = $request->request->all()['storageToken'];
+        $urlToken = $request->query->get('token');
+        $sessionToken = $_SESSION['token'];
 
-        if($email && $password && $confirmPassword && $token) {
+        if($email && $password && $confirmPassword && $urlToken) {
 
             // Valide mail ?
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -149,12 +149,12 @@ class LoginController extends AbstractController
                 return new JsonResponse(['error' => 'Les deux mots de passe ne sont pas les mêmes'], 404);
             }
 
-            if(!$storageToken ) {
+            if(!$sessionToken ) {
                 return new JsonResponse(['error' => 'Le lien a expiré, il faut refaire une demande de réinitialisation depuis le login et cliquer sur le <b>dernier</b> mail'], 404);
             }
 
             // Tokens similar ?
-            if($token !== $storageToken) {
+            if($urlToken !== $sessionToken) {
                 return new JsonResponse(['error' => 'Mauvais lien, il faut refaire une demande de réinitialisation depuis le login et cliquer sur le <b>dernier</b> mail'], 404);
             }
 

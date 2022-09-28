@@ -44,7 +44,7 @@ class CryoContactRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select([
-                'c.firstname', 'c.lastname', 'c.email', 'c.phone', 'c.commitment', 'c.company', 'c.sessions',
+                'c.firstname', 'c.lastname', 'c.email', 'c.phone',
                 'center.name', 'center.city', 'center.is_open'])
             ->leftJoin(CryoCenters::class, 'center', 'WITH', 'c.center = center.id')
             ->orderBy('c.createdAt', 'DESC')

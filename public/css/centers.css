@@ -70,7 +70,7 @@ body {
 
 .second-choice {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: 2em 0;
 }
 

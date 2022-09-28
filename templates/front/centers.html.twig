@@ -39,7 +39,7 @@
                         <img src="{{ asset('img/pin-valid.png') }}" alt="Marqueur vert"> <span>Centre ouvert</span>
                     </div>
                     <div class="legend-pin">
-                        <img src="{{ asset('img/pin-invalid.png') }}" alt="Marqueur rouge"> <span>Centre bientôt ouvert</span>
+                        <img src="{{ asset('img/pin-invalid.png') }}" alt="Marqueur rouge"> <span>Centre en pré-accord</span>
                     </div>
                 </div>
                 <input type="hidden" name="center" value="">
@@ -49,21 +49,14 @@
 
             {# DEUXIEME PARTIE / ENGAGEMENT #}
             <fieldset>
-                <h3>Choix du type d'engagement</h3>
-                <p>Choisissez entre devenir partenaire ou s'informer sur les réservations</p>
+                <h3>Devenir Ambassadeur</h3>
+                <p>Obtenir un tarif préférentiel</p>
                 <div class="second-choice">
                     <div class="choice-card">
-                        <p>Voulez-vous devenir partenaire ou pré-réserver des séances ?</p>
-                        <label>
-                            <input type="radio" name="commitment" id="commitment" value="pre-order">
-                            <span>Pré-réserver</span>
-                        </label>
-                    </div>
-                    <div class="choice-card">
-                        <p>Choisissez cette option pour devenir partenaire et avoir des tarifs préférentiels</p>
+                        <p>Accepter et passer au formulaire</p>
                         <label>
                             <input type="radio" name="commitment" id="commitment" value="become-partner">
-                            <span>Devenir partnaire</span>
+                            <span>Accepter</span>
                         </label>
                     </div>
                 </div>
@@ -73,7 +66,24 @@
 
             {# TROISIEME PARTIE / DYNAMIC HTML #}
             <fieldset>
-                <div id="step3"></div>
+                <section class="step next-step" id="partner">
+                    <h3>Formulaire</h3>
+                    <p class="become-partner-info">Une fois le formulaire envoyé, Cryomédica vous recontactera rapidement.</p>
+                    <div class="inner-form">
+                        <div class="form-group">
+                            <input id="firstname" name="firstname" type="text" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="lastname" name="lastname" type="text" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="phone" name="phone" type="text" placeholder="Téléphone" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="email" name="email" type="email" placeholder="Email" required>
+                        </div>
+                    </div>
+                </section>
                 <button type="button" class="action-button previous previous_button">Retour</button>
                 <button type="submit" class="action-button">Envoyer</button>
             </fieldset>

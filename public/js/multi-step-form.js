@@ -145,23 +145,23 @@
 
             step++;
 
-            if(step === 3) {
-                console.log("3eme étape", isSelectedCenterOpen, commitment)
-                // Pré-reserver
-                if(commitment === 'pre-order') {
-                    // Centre ouvert
-                    if(isSelectedCenterOpen) {
-                        step3.html(preOrderHtml);
-                    } else {
-                        // Centre fermé
-                        step3.html(interestHtml);
-                    }
-                } else {
-                    // Ou devenir partenaire
-                    step3.html(partnerHtml);
-
-                }
-            }
+            // if(step === 3) {
+            //     console.log("3eme étape", isSelectedCenterOpen, commitment)
+            //     // Pré-reserver
+            //     if(commitment === 'pre-order') {
+            //         // Centre ouvert
+            //         if(isSelectedCenterOpen) {
+            //             step3.html(preOrderHtml);
+            //         } else {
+            //             // Centre fermé
+            //             step3.html(interestHtml);
+            //         }
+            //     } else {
+            //         // Ou devenir partenaire
+            //         step3.html(partnerHtml);
+            //
+            //     }
+            // }
 
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();

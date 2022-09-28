@@ -102,108 +102,79 @@ class FrontController extends AbstractController
 
             $centerId     = (int)$_POST['center'] ?? 0;
             $center       = $centersRepo->find($centerId);
-            $commitment   = isset($_POST['commitment']) ? trim($_POST['commitment']) : false;
+//            $commitment   = isset($_POST['commitment']) ? trim($_POST['commitment']) : false;
 
             // Check if center exist ?
             if($center) {
-
-                $isCenterOpen = $center->isIsOpen();
                 $centerName = $center->getName();
                 $centerCity = $center->getCity();
-                $content = '';
 
                 // Check if radio input commitment matches with 'pre-order' or 'become-partner'
-                if($commitment === 'become-partner' || $commitment === 'pre-order') {
+//                if($commitment === 'become-partner' || $commitment === 'pre-order') {
 
-                    // General data recevied
-                    $firstname = (isset($_POST['firstname'])) ? trim($_POST['firstname']) : '';
-                    $lastname  = (isset($_POST['lastname'])) ? trim($_POST['lastname']) : '';
-                    $phone     = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
-                    $email     = trim($_POST['email']);
+                // General data recevied
+                $firstname = (isset($_POST['firstname'])) ? trim($_POST['firstname']) : '';
+                $lastname  = (isset($_POST['lastname'])) ? trim($_POST['lastname']) : '';
+                $phone     = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
+                $email     = trim($_POST['email']);
 
-                    // General validations
-                    if (!$firstname || strlen($firstname) < 3 )
-                        $errors['firstname'] = true;
-                    if (!$lastname || strlen($lastname) < 3)
-                        $errors['lastname'] = true;
-                    if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-                        $errors['email'] = true;
-                    if(!$phone)
-                        $errors['phone'] = true;
+                // General validations
+                if (!$firstname || strlen($firstname) < 3 )
+                    $errors['firstname'] = true;
+                if (!$lastname || strlen($lastname) < 3)
+                    $errors['lastname'] = true;
+                if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
+                    $errors['email'] = true;
+                if(!$phone)
+                    $errors['phone'] = true;
 
-                    // Case 1 - BECOME PARTNER
-                    if($commitment === 'become-partner') {
-                        // Validation
-                        $company = (isset($_POST['company'])) ? trim($_POST['company']) : '';
+                $content = "Bonjour Mr Favre, je vous contacte pour devenir Ambassadeur du centre $centerName situé à $centerCity";
 
-                        if(!$company)
-                            $errors['company'] = true;
+                if(!$errors) {
 
-                        $content = "Bonjour Mr Favre, je vous contacte pour devenir partenaire du centre $centerName situé à $centerCity";
-                    }
+                    // Set record in database
+                    $contact = new CryoContact();
 
-                    // Case 2 - PRE-ORDER
-                    if($commitment === 'pre-order' && $isCenterOpen) {
-                        // Validation
-                        $sessionNumber = (isset($_POST['number'])) ? trim($_POST['number']) : '';
+                    $contact->setCenter($center);
+                    $contact->setFirstname($firstname);
+                    $contact->setLastname($lastname);
+                    $contact->setPhone($phone);
+                    $contact->setEmail($email);
+                    $contact->setCreatedAt(new \DateTimeImmutable());
 
-                        if(gettype($sessionNumber) !== 'integer' && $sessionNumber < 1)
-                            $errors['sessionNumber'] = true;
+//                    if($commitment === 'become-partner') {
+//                        $contact->setCompany($company);
+//                        $contact->setCommitment($commitment);
+//                    } else if($commitment === 'pre-order' && $isCenterOpen) {
+//                        $contact->setSessions($sessionNumber);
+//                        $contact->setCommitment($commitment);
+//                    } else if($commitment === 'pre-order' && !$isCenterOpen) {
+//                        $contact->setCommitment('interest');
+//                    }
 
-                        $content = "Bonjour Mr Favre, je vous contacte pour pré-réserver des séances au centre $centerName situé à $centerCity pour un total de $sessionNumber séance(s)";
-                    }
+                    $this->em->persist($contact);
+                    $this->em->flush();
+                    /*
+                    // Send mail
+                    // $mailTo  = 'pfavre92@icloud.com';
+                    $mailTo  = 'ugo17190@gmail.com';
 
-                    // Case 3 - PRE-ORDER - center close
-                    if($commitment === 'pre-order' && !$isCenterOpen) {
-                        $content = "Bonjour Mr Favre, je vous fait part de mon intérêt pour le centre $centerName situé à $centerCity";
-                    }
+                    $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
 
+                    $headers  = 'MIME-Version: 1.0' . "\r\n";
+                    $headers .= 'From: Cryomedica <contact@cryomedica.fr>'."\r\n";
+                    $headers .= 'Reply-To: '.$email."\r\n";
+                    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+                    $headers .= 'X-Mailer: PHP/' . phpversion();
 
-                    if(!$errors) {
-
-                        // Set record in database
-                        $contact = new CryoContact();
-
-                        $contact->setCenter($center);
-                        $contact->setFirstname($firstname);
-                        $contact->setLastname($lastname);
-                        $contact->setPhone($phone);
-                        $contact->setEmail($email);
-                        $contact->setCreatedAt(new \DateTimeImmutable());
-
-                        if($commitment === 'become-partner') {
-                            $contact->setCompany($company);
-                            $contact->setCommitment($commitment);
-                        } else if($commitment === 'pre-order' && $isCenterOpen) {
-                            $contact->setSessions($sessionNumber);
-                            $contact->setCommitment($commitment);
-                        } else if($commitment === 'pre-order' && !$isCenterOpen) {
-                            $contact->setCommitment('interest');
-                        }
-
-                        $this->em->persist($contact);
-                        $this->em->flush();
-                        /*
-                        // Send mail
-                        // $mailTo  = 'pfavre92@icloud.com';
-                        $mailTo  = 'ugo17190@gmail.com';
-
-                        $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
-
-                        $headers  = 'MIME-Version: 1.0' . "\r\n";
-                        $headers .= 'From: Cryomedica <contact@cryomedica.fr>'."\r\n";
-                        $headers .= 'Reply-To: '.$email."\r\n";
-                        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-                        $headers .= 'X-Mailer: PHP/' . phpversion();
-
-                        mail($mailTo, $subject, $content, $headers); */
-                        // Redirect
-                        return $this->redirectToRoute('mailSent');
-                    }
-
-                } else {
-                    throw new \Exception('Il y a une erreur sur la partie 2 du formulaire');
+                    mail($mailTo, $subject, $content, $headers); */
+                    // Redirect
+                    return $this->redirectToRoute('mailSent');
                 }
+
+//                } else {
+//                    throw new \Exception('Il y a une erreur sur la partie 2 du formulaire');
+//                }
             } else {
                 throw new \Exception('Ce centre n\'existe pas');
             }

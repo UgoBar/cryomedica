@@ -2,14 +2,6 @@
 
 {% block body %}
 
-    <div class="row ms-0 w-100 ps-3">
-        <h5 class="ps-0">Trier par intérêt</h5>
-        <a class="btn bg-gradient-{{ subnav == 'all' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}">Tous</a>
-        <a class="btn bg-gradient-{{ subnav == 'become-partner' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=become-partner">Devenir Partenaire</a>
-        <a class="btn bg-gradient-{{ subnav == 'pre-order' ? 'primary' : 'secondary' }} mb-4 me-3" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=pre-order">Pré-achat</a>
-        <a class="btn bg-gradient-{{ subnav == 'interest' ? 'primary' : 'secondary' }} mb-4" type="submit" style="width: fit-content" href="{{ path('contacts') }}?commitment=interest">Intérêt</a>
-    </div>
-
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
@@ -29,12 +21,9 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tél</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Engamement</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Entreprise</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Centre</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ville</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Séances</th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                             </thead>
@@ -51,20 +40,6 @@
                                         <p class="mb-0 text-xs font-weight-bold">{{ contact.phone }}</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0 text-xs font-weight-bold">
-                                            {% if contact.commitment == 'pre-order' %}
-                                                Pré-achat
-                                            {% elseif contact.commitment == 'interest' %}
-                                                Intérêt
-                                            {% else %}
-                                                Partenaire
-                                            {% endif %}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0 text-xs font-weight-bold">{{ contact.company }}</p>
-                                    </td>
-                                    <td>
                                         <p class="mb-0 text-xs font-weight-bold">{{ contact.center.name }}</p>
                                     </td>
                                     <td>
@@ -76,9 +51,6 @@
                                         {% else %}
                                             <span class="badge badge-sm bg-gradient-danger">Fermé</span>
                                         {% endif %}
-                                    </td>
-                                    <td>
-                                        <p class="mb-0 text-xs font-weight-bold text-center">{{ contact.sessions }}</p>
                                     </td>
                                     <td class="align-middle">
                                         <a onclick="launchDeleteModal({{ contact.id }}, '{{ contact.firstname }} {{ contact.lastname }}')" class="delete-button"><i class="material-icons">delete</i></a>

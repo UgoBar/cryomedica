@@ -46,8 +46,9 @@
             <h6 class="text-uppercase pink font-weight-bolder mb-0">Informations générales</h6>
             {{ form_row(form.text, {
                 'attr': {'class':'form-group ps-3'},
-                'row_attr': {'class':'form-control mb-3'}
+                'row_attr': {'class':'form-control'}
             }) }}
+            <small class="mb-3">Astuce : Pour un meilleur affichage sur le site il est conseillé de mettre le texte dans le style <b>"Blockquote"</b></small>
             {{ form_row(form.signature, {
                 'attr': { 'class':'form-control', 'onfocus':'focused(this)', 'onfocusout':'defocused(this)' },
                 'label_attr':{'class':'form-label'},

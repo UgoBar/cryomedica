@@ -29,15 +29,6 @@ class CryoContact
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $company = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $sessions = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $commitment = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -102,42 +93,6 @@ class CryoContact
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getCompany(): ?string
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?string $company): self
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    public function getSessions(): ?int
-    {
-        return $this->sessions;
-    }
-
-    public function setSessions(?int $sessions): self
-    {
-        $this->sessions = $sessions;
-
-        return $this;
-    }
-
-    public function getCommitment(): ?string
-    {
-        return $this->commitment;
-    }
-
-    public function setCommitment(string $commitment): self
-    {
-        $this->commitment = $commitment;
 
         return $this;
     }

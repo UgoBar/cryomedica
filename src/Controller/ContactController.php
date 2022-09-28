@@ -27,25 +27,15 @@ class ContactController extends AbstractController
     {
         if ($this->helper->verifyConnection()) {
 
-            if($commitment = $request->query->get('commitment')) {
-                $contacts = $this->helper->em->getRepository(CryoContact::class)->findBy(
-                    ['commitment' => $commitment],
-                    ['createdAt' => 'DESC']
-                ) ?? false;
-                $subnav = $commitment;
-            } else {
-                $contacts = $this->helper->em->getRepository(CryoContact::class)->findBy(
+            $contacts = $this->helper->em->getRepository(CryoContact::class)->findBy(
                     [],
                     ['createdAt' => 'DESC']
                 ) ?? false;
-                $subnav = 'all';
-            }
 
             return $this->render('back/contact/list.html.twig', [
                 'nav' => 'contacts',
                 'title' => 'Liste des contact',
                 'contacts' => $contacts,
-                'subnav' => $subnav
             ]);
         }
 
@@ -75,7 +65,7 @@ class ContactController extends AbstractController
 
             if($contacts) {
                 // Column
-                $rows[] = implode(',', ['prénom', 'nom', 'email', 'tel', 'engagement', 'entreprise', 'séances', 'nom du centre', 'ville', 'statut (1=ouvert)']);
+                $rows[] = implode(',', ['prénom', 'nom', 'email', 'tel', 'nom du centre', 'ville', 'statut (1=ouvert)']);
 
                 // Rows
                 foreach ($contacts as $contact) {
