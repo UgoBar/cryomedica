@@ -1,0 +1,122 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/multi-form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/centers.css') }}">
+{#    <link rel="stylesheet" href="{{ asset('css/about.css') }}">#}
+
+    <style>
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1 0 auto;
+            background: white;
+        }
+        footer {
+            flex-shrink: 0;
+        }
+
+        h1 {
+            margin-bottom: 0.4em;
+        }
+
+        .multi_step_form #msform .tittle {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .bd-callout {
+            background-color: #fecaf0;
+            padding: 1.25rem;
+            width: 57%;
+            margin: 0 auto 1.25rem auto;
+            border-left: 10px solid var(--pink);
+        }
+
+        @media screen and (max-width: 900px) {
+            .inner-form {
+                width: 81%;
+            }
+        }
+
+        @media screen and (max-width: 620px) {
+            .multi_step_form #msform .tittle p {
+                padding: 0 1em;
+            }
+            .inner-form {
+                width: 105%;
+            }
+            .bd-callout {
+                width: 80%;
+            }
+            .step {
+                margin: 0 0 1em 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <!-- Multi step form -->
+    <section class="multi_step_form">
+        <form id="msform" method="post">
+
+            <!-- Tittle -->
+            <div class="tittle">
+                <h1 class="text-center text-uppercase">Contactez-nous</h1>
+{#                <p class="become-partner-info">Une fois le formulaire envoyé, Cryomédica vous recontactera rapidement.</p>#}
+            </div>
+
+            <div class="bd-callout bd-callout-info">
+                Vous pouvez également nous contacter en sélectionnant le <strong>centre de votre choix</strong> sur la page <a class="rame" href="{{ path('centers') }}">des centres</a>.
+            </div>
+
+{#            <!-- progressbar -->#}
+{#            <ul id="progressbar">#}
+{#                <li class="active">Choix du centre</li>#}
+{#                <li>Engagement</li>#}
+{#                <li>Formulaire</li>#}
+{#            </ul>#}
+
+            <!-- fieldsets -->
+
+            {# TROISIEME PARTIE / DYNAMIC HTML #}
+            <fieldset>
+                <section class="step next-step" id="partner">
+                    <div class="inner-form">
+                        <div class="form-group">
+                            <input id="firstname" name="firstname" type="text" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="lastname" name="lastname" type="text" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="phone" name="phone" type="text" placeholder="Téléphone" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="email" name="email" type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" placeholder="Votre message"></textarea>
+                        </div>
+                    </div>
+                </section>
+                <button type="submit" class="action-button">Envoyer</button>
+            </fieldset>
+        </form>
+    </section>
+    <!-- End Multi step form -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

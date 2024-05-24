@@ -125,6 +125,18 @@ input {
     border-color: var(--pink);
 }
 
+a.rame {
+    color: var(--pink);
+    text-decoration: none;
+}
+a.rame:hover {
+    text-decoration: underline;
+    color: var(--pink);
+}
+a.rame:visited {
+    color: var(--pink);
+}
+
 @media screen and (max-height: 1000px) and (max-width: 1500px) {
     main {
         min-height: unset;

@@ -102,15 +102,13 @@ class FrontController extends AbstractController
 
             $centerId     = (int)$_POST['center'] ?? 0;
             $center       = $centersRepo->find($centerId);
-//            $commitment   = isset($_POST['commitment']) ? trim($_POST['commitment']) : false;
 
             // Check if center exist ?
             if($center) {
+
                 $centerName = $center->getName();
                 $centerCity = $center->getCity();
 
-                // Check if radio input commitment matches with 'pre-order' or 'become-partner'
-//                if($commitment === 'become-partner' || $commitment === 'pre-order') {
 
                 // General data recevied
                 $firstname = (isset($_POST['firstname'])) ? trim($_POST['firstname']) : '';
@@ -128,7 +126,8 @@ class FrontController extends AbstractController
                 if(!$phone)
                     $errors['phone'] = true;
 
-                $content = "Bonjour Mr Favre, je vous contacte pour devenir Ambassadeur du centre $centerName situé à $centerCity";
+                $message = "Bonjour Mr Favre, je vous contacte pour devenir Ambassadeur du centre $centerName situé à $centerCity";
+
 
                 if(!$errors) {
 
@@ -142,22 +141,12 @@ class FrontController extends AbstractController
                     $contact->setEmail($email);
                     $contact->setCreatedAt(new \DateTimeImmutable());
 
-//                    if($commitment === 'become-partner') {
-//                        $contact->setCompany($company);
-//                        $contact->setCommitment($commitment);
-//                    } else if($commitment === 'pre-order' && $isCenterOpen) {
-//                        $contact->setSessions($sessionNumber);
-//                        $contact->setCommitment($commitment);
-//                    } else if($commitment === 'pre-order' && !$isCenterOpen) {
-//                        $contact->setCommitment('interest');
-//                    }
-
                     $this->em->persist($contact);
                     $this->em->flush();
-                    /*
+
                     // Send mail
-                    // $mailTo  = 'pfavre92@icloud.com';
-                    $mailTo  = 'ugo17190@gmail.com';
+                    //$mailTo  = 'ugo17190@gmail.com';
+                    $mailTo  = 'pfavre92@icloud.com';
 
                     $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
 
@@ -167,14 +156,11 @@ class FrontController extends AbstractController
                     $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
                     $headers .= 'X-Mailer: PHP/' . phpversion();
 
-                    mail($mailTo, $subject, $content, $headers); */
+                    mail($mailTo, $subject, $message, $headers);
                     // Redirect
                     return $this->redirectToRoute('mailSent');
                 }
 
-//                } else {
-//                    throw new \Exception('Il y a une erreur sur la partie 2 du formulaire');
-//                }
             } else {
                 throw new \Exception('Ce centre n\'existe pas');
             }
@@ -188,6 +174,54 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/contact', name: 'front_contact')]
+    public function contact(): Response
+    {
+        $errors = [];
+
+        if(isset($_POST['lastname'])) {
+            // General data recevied
+            $firstname = strip_tags(trim($_POST['firstname']));
+            $lastname = strip_tags(trim($_POST['lastname']));
+            $phone = strip_tags(trim($_POST['phone']));
+            $email = strip_tags(trim($_POST['email']));
+            $message = strip_tags(trim($_POST['message']));
+
+            // General validations
+            if (!$firstname || strlen($firstname) < 3 )
+                $errors['firstname'] = true;
+            if (!$lastname || strlen($lastname) < 3)
+                $errors['lastname'] = true;
+            if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
+                $errors['email'] = true;
+            if(!$phone)
+                $errors['phone'] = true;
+            if(!$message)
+                $errors['content'] = true;
+
+            if(!$errors) {
+
+                // Send mail
+                $mailTo  = 'pfavre92@icloud.com';
+
+                $subject = $firstname . ' ' . $lastname . ' (' . $phone . ')';
+
+                $headers  = 'MIME-Version: 1.0' . "\r\n";
+                $headers .= 'From: Cryomedica <contact@cryomedica.fr>'."\r\n";
+                $headers .= 'Reply-To: '.$email."\r\n";
+                $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+                $headers .= 'X-Mailer: PHP/' . phpversion();
+
+                mail($mailTo, $subject, $message, $headers);
+                // Redirect
+                return $this->redirectToRoute('mailSent');
+            }
+        }
+
+        return $this->render('front/contact.html.twig', [
+            'title' => 'Contact',
+        ]);
+    }
 
     #[Route('/mailSent', name: 'mailSent')]
     public function mailSent(): Response

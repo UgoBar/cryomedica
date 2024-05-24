@@ -102,6 +102,7 @@
                 <a href="{{ path('cabins') }}" class="nav-item {{ app.request.get('_route') == 'cabins' ? 'current' : ''}}">Cabines</a>
                 <a href="{{ path('historic') }}" class="nav-item {{ app.request.get('_route') == 'historic' ? 'current' : ''}}">Historique</a>
                 <a href="{{ path('about') }}" class="nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">Evènements</a>
+                <a href="{{ path('front_contact') }}" class="nav-item {{ app.request.get('_route') == 'front_contact' ? 'current' : ''}}">Contact</a>
             </nav>
 
             <div class="menu-toggle">
@@ -133,6 +134,9 @@
                 </div>
                 <div class="nav-wrapper">
                     <a href="{{ path('about') }}" class="mobile-nav-item {{ app.request.get('_route') == 'about' ? 'current' : ''}}">Evènements</a>
+                </div>
+                <div class="nav-wrapper">
+                    <a href="{{ path('front_contact') }}" class="mobile-nav-item {{ app.request.get('_route') == 'front_contact' ? 'current' : ''}}">Contact</a>
                 </div>
 
             </nav>

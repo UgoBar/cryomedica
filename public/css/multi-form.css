@@ -387,3 +387,19 @@ main {
     color: white;
     border-color: var(--pink);
 }
+
+.multi_step_form textarea {
+    border-radius: 3px;
+    border: 1px solid #d8e1e7;
+    padding: 0 20px;
+    height: auto;
+    font: 400 15px/48px "Lexand Deca", sans-serif;
+    box-shadow: none;
+    outline: none;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: .4s ease-in-out;
+}
+.multi_step_form textarea:focus {
+    border-color: var(--pink);
+}
