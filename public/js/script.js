@@ -28,3 +28,15 @@ const toggleClass = (node, className) => {
         item.classList.toggle(className)
     })
 }
+
+/** Axeptio **/
+window.axeptioSettings = {
+    clientId: "6396e1690c3658513561f5f1",
+    cookiesVersion: "cryomedica-fr",
+};
+
+(function(d, s) {
+    var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+    e.async = true; e.src = "//static.axept.io/sdk.js";
+    t.parentNode.insertBefore(e, t);
+})(document, "script");
